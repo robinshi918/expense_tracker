@@ -8,10 +8,11 @@ import java.sql.Date
  * @since 3/08/21
  */
 data class Transaction(
+    val transactionId: Int,
     val categoryId: Int,
+    val categoryName: String,
     val amount: Int,
-    val type: Int,
+    val expenseType: Int,
     val currency: String,
     val date: Date,
-    val note: String
 )

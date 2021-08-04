@@ -7,4 +7,6 @@
     <dimen name="transaction_detail_title_text_size">25sp</dimen>
     <dimen name="transaction_detail_row_padding_top">5dp</dimen>
     <dimen name="transaction_detail_row_padding_bottom">5dp</dimen>
+    <dimen name="transaction_detail_divider_height">1dp</dimen>
+
 </resources>
