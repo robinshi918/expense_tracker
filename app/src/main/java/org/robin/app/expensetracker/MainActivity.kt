@@ -1,8 +1,7 @@
 package org.robin.app.expensetracker
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.robin.app.expensetracker.databinding.FragmentTransactionDetailBinding
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

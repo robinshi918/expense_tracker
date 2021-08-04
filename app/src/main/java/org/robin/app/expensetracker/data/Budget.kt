@@ -1,7 +1,5 @@
 package org.robin.app.expensetracker.data
 
-import java.sql.Date
-
 /**
  *
  * @author Robin Shi

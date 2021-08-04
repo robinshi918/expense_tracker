@@ -15,6 +15,7 @@ class TransactionListViewModel : ViewModel() {
     var transactionList = MutableLiveData<List<Transaction>>()
 
     init {
+        // TODO below are test data, remove them at last.
         val t1 = Transaction(1, 1, "transport", 100, 1, "NZD", Date())
         val t2 = Transaction(2, 2, "entertain", 200, 1, "NZD", Date())
         val t3 = Transaction(3, 3, "food", 300, 1, "NZD", Date())
