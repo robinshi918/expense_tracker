@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
 
         <variable
-            name="viewModel"
-            type="org.robin.app.expensetracker.viewmodel.TransactionViewModel" />
+            name="transaction"
+            type="org.robin.app.expensetracker.data.Transaction" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:onClick="@{clickListener}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,10 +29,10 @@
                 android:id="@+id/expense_type"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:onClick="@{clickListener}"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:onClick="@{clickListener}"
                 android:src="@drawable/plus_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="15dp"
-                android:text="entertainment"
+                android:text="@{transaction.categoryName}"
                 app:layout_constraintStart_toEndOf="@id/expense_type"
                 app:layout_constraintTop_toTopOf="@id/expense_type" />
 
@@ -58,10 +61,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="15dp"
-                android:text="NZD 200.00"
+                android:text="@{Integer.toString(transaction.amount)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="100.00" />
+
+            <TextView
+                android:id="@+id/currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="8dp"
+                android:text="@{transaction.currency}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/amount"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="NZD" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

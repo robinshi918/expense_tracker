@@ -1,6 +1,6 @@
 package org.robin.app.expensetracker.data
 
-import java.sql.Date
+import java.util.Date
 
 /**
  *
@@ -13,6 +13,6 @@ data class Transaction(
     val categoryName: String,
     val amount: Int,
     val expenseType: Int,
-    val currency: String,
+    val currency: String = "NZD",
     val date: Date,
 )

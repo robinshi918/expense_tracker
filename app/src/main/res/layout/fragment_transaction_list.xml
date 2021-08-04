@@ -14,11 +14,12 @@
         android:minHeight="20dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        tools:text="Aug 2021"
+        android:text="Aug 2021"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Aug 2021" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transaction_list"
@@ -31,6 +32,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date"
         tools:context=".MainActivity"
-        tools:listitem="@layout/list_item_transaction3" />
+        tools:listitem="@layout/list_item_transaction" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_btn"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/plus_icon"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

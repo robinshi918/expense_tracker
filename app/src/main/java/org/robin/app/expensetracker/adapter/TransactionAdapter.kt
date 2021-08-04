@@ -22,8 +22,9 @@ class TransactionAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-                R.layout.list_item_transaction3,
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.list_item_transaction,
                 parent,
                 false
             )
@@ -31,24 +32,31 @@ class TransactionAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO()
+        holder.bind(getItem(position))
     }
-
 
     class ViewHolder(private val binding: ListItemTransactionBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-            init {
+        init {
 //                // set onclick listener
-                Toast.makeText(binding.root.context, "Transaction Clicked, go to detail", Toast.LENGTH_SHORT).show()
-//                binding.setClickListener { view ->
-//                    binding.viewModel?.plantId?.let { plantId ->
-//                        navigateToPlant(plantId, view)
-//                    }
-//                }
+
+
+            binding.setClickListener { view ->
+                binding.transaction?.transactionId?.let { id ->
+                    navigateToTransactionDetail(id, view)
+                }
             }
+        }
 
         private fun navigateToTransactionDetail(transactionId: Int, view: View) {
+
+            Toast.makeText(
+                binding.root.context,
+                "Transaction Clicked, go to detail. id = $transactionId",
+                Toast.LENGTH_SHORT
+            ).show()
+
             // TODO jump to transaction detail
             /*val direction = HomeViewPagerFragmentDirections
                 .actionViewPagerFragmentToPlantDetailFragment(plantId)
@@ -56,12 +64,12 @@ class TransactionAdapter :
 
         }
 
-        fun bind(transaction: Transaction) {
-            // TODO bind data
-            /*with(binding) {
-                viewModel = PlantAndGardenPlantingsViewModel(plantings)
+        fun bind(t: Transaction) {
+
+            with(binding) {
+                transaction = t
                 executePendingBindings()
-            }*/
+            }
         }
     }
 }
