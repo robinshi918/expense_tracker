@@ -1,5 +1,6 @@
 package org.robin.app.expensetracker.data
 
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -9,21 +10,20 @@ import javax.inject.Inject
  */
 class RepositoryImpl @Inject constructor(
     private val appDatabase: AppDatabase
-) : RepositoryInterface {
+) : Repository {
 
-    override fun getCategoryList(): List<Category> {
+    override fun getCategoryList(): Flow<List<Category>> {
         TODO("Not yet implemented")
     }
 
-    override fun getTransactionList(month: String): List<Transaction> =
+    override fun getTransactionList(month: String): Flow<List<Transaction>> =
         appDatabase.transactionDao().getAll()
 
 
-    override fun setTransaction(t: Transaction) {
-        TODO("Not yet implemented")
-    }
+    override fun setTransaction(transaction: Transaction) =
+        appDatabase.transactionDao().insert(transaction)
 
-    override fun getBudgetList(month: String): List<Budget> {
+    override fun getBudgetList(month: String): Flow<List<Budget>> {
         TODO("Not yet implemented")
     }
 }

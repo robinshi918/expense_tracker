@@ -1,14 +1,12 @@
 package org.robin.app.expensetracker.viewmodel
 
-import android.os.Handler
-import android.os.Looper
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.robin.app.expensetracker.data.RepositoryInterface
+import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.Transaction
 import javax.inject.Inject
-import kotlin.concurrent.thread
 
 /**
  *
@@ -17,18 +15,9 @@ import kotlin.concurrent.thread
  */
 @HiltViewModel
 class TransactionListViewModel @Inject internal constructor(
-    repo: RepositoryInterface
+    repo: Repository
 ) : ViewModel() {
-
-    var transactionList = MutableLiveData<List<Transaction>>()
-
-    init {
-        // TODO remove this thread code.
-        thread {
-            val list = repo.getTransactionList("")
-            Handler(Looper.getMainLooper()).post {
-                transactionList.value = list
-            }
-        }
-    }
+    // TODO only show the transactions by month
+    val transactionList: LiveData<List<Transaction>> =
+        repo.getTransactionList("").asLiveData()
 }

@@ -1,29 +1,31 @@
 package org.robin.app.expensetracker.data
 
+import kotlinx.coroutines.flow.Flow
+
 /**
  *
  * @author Robin Shi
  * @since 3/08/21
  */
-interface RepositoryInterface {
+interface Repository {
 
     /**
      * get category list
      */
-    fun getCategoryList(): List<Category>
+    fun getCategoryList(): Flow<List<Category>>
 
     /**
      * get transaction list
      */
-    fun getTransactionList(month: String): List<Transaction>
+    fun getTransactionList(month: String): Flow<List<Transaction>>
 
     /**
      * add or update a transaction
      */
-    fun setTransaction(t: Transaction)
+    fun setTransaction(transaction: Transaction)
 
     /**
      * get budget list for a certain month
      */
-    fun getBudgetList(month: String): List<Budget>
+    fun getBudgetList(month: String): Flow<List<Budget>>
 }

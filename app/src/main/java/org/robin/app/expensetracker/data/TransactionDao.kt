@@ -1,9 +1,7 @@
 package org.robin.app.expensetracker.data
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 /**
  *
@@ -14,19 +12,19 @@ import androidx.room.Query
 interface TransactionDao {
 
     @Query("SELECT * FROM `transaction`")
-    fun getAll(): List<Transaction>
+    fun getAll(): Flow<List<Transaction>>
 
     @Query("SELECT * FROM `transaction` WHERE transactionId = :id")
-    fun findById(id: Int): List<Transaction>
+    fun findById(id: Int): Flow<List<Transaction>>
 
     // TODO to implement
     /**
      * find all transactions for a certain month
      */
     /*@Query("SELECT * FROM `transaction`")
-    fun findByDate(month: String): List<Transaction>*/
+    fun findByDate(month: String): Flow<List<Transaction>>*/
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(transaction: Transaction)
 
     @Delete

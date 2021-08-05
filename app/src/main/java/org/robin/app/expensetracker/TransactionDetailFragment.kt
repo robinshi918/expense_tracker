@@ -31,9 +31,8 @@ class TransactionDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTransactionDetailBinding.inflate(inflater, container, false)
-        val transactionId = safeArgs.transactionId
-        Toast.makeText(context, "show detail for transaction $transactionId", Toast.LENGTH_SHORT)
-            .show()
+
+
 
 
         binding.categoryContainer.setOnClickListener {
@@ -43,9 +42,16 @@ class TransactionDetailFragment : Fragment() {
         (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
 
+        val transactionId = safeArgs.transactionId
+        Toast.makeText(context, "show detail for transaction $transactionId", Toast.LENGTH_SHORT)
+            .show()
+
         return binding.root
     }
 
+    /**
+     * handle BACK button click
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
