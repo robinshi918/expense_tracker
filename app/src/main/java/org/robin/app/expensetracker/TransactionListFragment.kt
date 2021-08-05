@@ -68,18 +68,18 @@ class TransactionListFragment : Fragment() {
     private fun testDatabase() {
         thread {
             val dao = AppDatabase.getInstance(requireActivity().applicationContext).transactionDao()
-            Log.e("Robin", "size of transactions = ${dao.getAll().size}" )
-            val t1 = Transaction( 1, "transport", 100, 1, "NZD"/*, Date()*/)
+            Log.e("Robin", "size of transactions = ${dao.getAll().size}")
+            val t1 = Transaction(1, "transport", 100, 1, "NZD"/*, Date()*/)
             dao.insert(t1)
-            Log.e("Robin", "size of transactions = ${dao.getAll().size}" )
+            Log.e("Robin", "size of transactions = ${dao.getAll().size}")
             val t2 = dao.findById(4)
-            Log.e("Robin", "size of transactions for id(4) = ${t2.size}" )
+            Log.e("Robin", "size of transactions for id(4) = ${t2.size}")
             if (t2.isEmpty()) {
                 Log.e("Robin", "id 4 not found")
             } else {
                 Log.e("Robin", "id 4 found. deleting it")
                 dao.delete(t2[0])
-                Log.e("Robin", "size of transactions for id(4) = ${dao.findById(4).size}" )
+                Log.e("Robin", "size of transactions for id(4) = ${dao.findById(4).size}")
             }
         }
 

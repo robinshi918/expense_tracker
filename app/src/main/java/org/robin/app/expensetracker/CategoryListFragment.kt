@@ -36,7 +36,7 @@ class CategoryListFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 findNavController().navigateUp()
             }

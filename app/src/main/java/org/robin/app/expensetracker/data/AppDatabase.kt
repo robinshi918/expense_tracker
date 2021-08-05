@@ -12,14 +12,15 @@ import org.robin.app.expensetracker.utilities.DATABASE_NAME
  * @since 5/08/21
  */
 @Database(entities = [Transaction::class], version = 1)
-abstract class AppDatabase : RoomDatabase(){
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun transactionDao(): TransactionDao
 
     companion object {
-        @Volatile private var instance: AppDatabase? = null
+        @Volatile
+        private var instance: AppDatabase? = null
 
-        fun getInstance(context: Context) : AppDatabase {
+        fun getInstance(context: Context): AppDatabase {
             return instance ?: synchronized(this) {
                 instance ?: buildDatabase(context).also { instance = it }
             }
