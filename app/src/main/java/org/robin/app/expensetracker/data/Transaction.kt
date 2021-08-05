@@ -1,5 +1,8 @@
 package org.robin.app.expensetracker.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
 /**
@@ -7,12 +10,18 @@ import java.util.*
  * @author Robin Shi
  * @since 3/08/21
  */
+@Entity(tableName = "transaction")
 data class Transaction(
-    val transactionId: Int,
-    val categoryId: Int,
-    val categoryName: String,
-    val amount: Int,
-    val expenseType: Int,
-    val currency: String = "NZD",
-    val date: Date,
-)
+    @ColumnInfo(name = "categoryId") val categoryId: Int,
+    @ColumnInfo(name = "categoryName") val categoryName: String,
+    @ColumnInfo(name = "amount") val amount: Int,
+    @ColumnInfo(name = "expenseType") val expenseType: Int,
+    @ColumnInfo(name = "currency") val currency: String = "NZD",
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "transactionId") var transactionId: Int = 0,
+    //val date: Date,
+) {
+
+    override fun toString(): String {
+        return "Transaction(categoryId=$categoryId, categoryName='$categoryName', amount=$amount, expenseType=$expenseType, currency='$currency', transactionId=$transactionId)"
+    }
+}
