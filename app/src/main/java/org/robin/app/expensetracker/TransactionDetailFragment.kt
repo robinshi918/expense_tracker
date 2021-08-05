@@ -2,6 +2,7 @@ package org.robin.app.expensetracker
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -39,6 +40,18 @@ class TransactionDetailFragment : Fragment() {
             findNavController().navigate(R.id.action_select_category)
         }
 
+        (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+
         return binding.root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigateUp()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

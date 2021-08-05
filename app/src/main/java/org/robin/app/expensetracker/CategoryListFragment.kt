@@ -2,10 +2,12 @@ package org.robin.app.expensetracker
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import org.robin.app.expensetracker.databinding.FragmentCategoryListBinding
 import org.robin.app.expensetracker.viewmodel.CategoryListViewModel
 
@@ -27,6 +29,18 @@ class CategoryListFragment : Fragment() {
 
         binding = FragmentCategoryListBinding.inflate(inflater, container, false)
 
+        (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+
         return binding.root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigateUp()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
