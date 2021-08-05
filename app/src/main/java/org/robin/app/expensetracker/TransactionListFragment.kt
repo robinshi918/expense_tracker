@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import org.robin.app.expensetracker.adapter.TransactionAdapter
 import org.robin.app.expensetracker.data.AppDatabase
 import org.robin.app.expensetracker.data.Transaction
@@ -21,6 +22,7 @@ import kotlin.concurrent.thread
  * @author Robin Shi
  * @since 4/08/21
  */
+@AndroidEntryPoint
 class TransactionListFragment : Fragment() {
 
     private lateinit var binding: FragmentTransactionListBinding
@@ -65,7 +67,7 @@ class TransactionListFragment : Fragment() {
 
     private fun testDatabase() {
         thread {
-            val dao = AppDatabase.getInstance(requireActivity().applicationContext).getTransactionDao()
+            val dao = AppDatabase.getInstance(requireActivity().applicationContext).transactionDao()
             Log.e("Robin", "size of transactions = ${dao.getAll().size}" )
             val t1 = Transaction( 1, "transport", 100, 1, "NZD"/*, Date()*/)
             dao.insert(t1)

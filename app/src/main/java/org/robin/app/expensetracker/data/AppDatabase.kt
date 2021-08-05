@@ -14,7 +14,7 @@ import org.robin.app.expensetracker.utilities.DATABASE_NAME
 @Database(entities = [Transaction::class], version = 1)
 abstract class AppDatabase : RoomDatabase(){
 
-    abstract fun getTransactionDao(): TransactionDao
+    abstract fun transactionDao(): TransactionDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null

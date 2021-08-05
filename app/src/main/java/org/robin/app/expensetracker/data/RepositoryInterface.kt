@@ -26,9 +26,4 @@ interface RepositoryInterface {
      * get budget list for a certain month
      */
     fun getBudgetList(month: String): List<Budget>
-
-    /**
-     * get latest exchange rate from NZD to USD
-     */
-    fun getCurrencyRate(): Float
 }
