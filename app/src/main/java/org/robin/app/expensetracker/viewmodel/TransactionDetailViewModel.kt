@@ -13,6 +13,7 @@ import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.Transaction
 import java.util.*
 import javax.inject.Inject
+import kotlin.concurrent.thread
 
 /**
  *
@@ -30,26 +31,23 @@ class TransactionDetailViewModel @Inject internal constructor(
     val transaction = repo.getTransactionById(transactionId).asLiveData()
 
     fun save() {
-
         val t = Transaction(0, "sport", 100, Transaction.EXPENSE_TYPE_EXPENSE, "NZD", Calendar.getInstance())
         viewModelScope.launch(Dispatchers.IO) {
             repo.setTransaction(t)
         }
 
         // TODO
-//        thread {
-//            Log.e("Robin", "save transaction changes. transactionID = $transactionId")
-//            val item = repo.getTransactionById(1000)
-//            Log.e("Robin", "transactionDetailViewModel No. of Ts = $item")
-//        }
-
+        /*thread {
+            Log.e("Robin", "save transaction changes. transactionID = $transactionId")
+            val item = repo.getTransactionById(-1)
+            Log.e("Robin", "transactionDetailViewModel No. of Ts = $item")
+        }*/
     }
 
     fun delete() {
         viewModelScope.launch(Dispatchers.IO) {
             repo.deleteTransactionById(transactionId)
         }
-
     }
 
     private fun testNetworkService() {

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--common values-->
+    <dimen name="fab_bottom_margin">30dp</dimen>
+
+    <!--transaction detail fragment-->
     <dimen name="transaction_detail_start_padding">15dp</dimen>
     <dimen name="transaction_detail_end_padding">15dp</dimen>
     <dimen name="transaction_detail_row_height">80dp</dimen>
@@ -8,5 +12,9 @@
     <dimen name="transaction_detail_row_padding_top">10dp</dimen>
     <dimen name="transaction_detail_row_padding_bottom">10dp</dimen>
     <dimen name="transaction_detail_divider_height">1dp</dimen>
+    <dimen name="transaction_detail_fab_margin_between">40dp</dimen>
+
+
+
 
 </resources>

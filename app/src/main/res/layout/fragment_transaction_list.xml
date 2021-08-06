@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/tv_date"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@android:color/darker_gray"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date"
         tools:context=".MainActivity"
         tools:listitem="@layout/list_item_transaction" />
 
@@ -40,7 +40,7 @@
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="@dimen/fab_bottom_margin"
         android:src="@drawable/add_icon"
         android:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -12,12 +12,12 @@ import java.util.*
  */
 @Entity(tableName = "transaction")
 data class Transaction(
-    @ColumnInfo(name = "categoryId") val categoryId: Int,
-    @ColumnInfo(name = "categoryName") val categoryName: String,
-    @ColumnInfo(name = "amount") val amount: Int,
-    @ColumnInfo(name = "expenseType") val expenseType: Int,
+    @ColumnInfo(name = "categoryId") val categoryId: Int = Category.INVALID_CATEGORY_ID,
+    @ColumnInfo(name = "categoryName") val categoryName: String = "",
+    @ColumnInfo(name = "amount") val amount: Int = 0,
+    @ColumnInfo(name = "expenseType") val expenseType: Int = EXPENSE_TYPE_EXPENSE,
     @ColumnInfo(name = "currency") val currency: String = CURRENCY_TYPE_NZD,
-    @ColumnInfo(name = "date") val date: Calendar,
+    @ColumnInfo(name = "date") val date: Calendar = Calendar.getInstance(),
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "transactionId") var transactionId: Int = 0,
     //val date: Date,
 ) {

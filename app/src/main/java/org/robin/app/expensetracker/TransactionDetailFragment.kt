@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.robin.app.expensetracker.data.Transaction
 import org.robin.app.expensetracker.databinding.FragmentTransactionDetailBinding
 import org.robin.app.expensetracker.ui.MonthYearPickerDialog
+import org.robin.app.expensetracker.util.Util
 import org.robin.app.expensetracker.viewmodel.TransactionDetailViewModel
 import java.util.*
 
@@ -45,16 +46,54 @@ class TransactionDetailFragment : Fragment() {
 
         binding = FragmentTransactionDetailBinding.inflate(inflater, container, false)
 
-        viewModel.transaction.observe(viewLifecycleOwner){ t: Transaction ->
+        setupClickListeners()
+
+        val transactionId = safeArgs.transactionId
+        if (transactionId != -1) {
+            // init widget values with data from database
+            viewModel.transaction.observe(viewLifecycleOwner) { t: Transaction ->
+                initUI(t)
+                transaction = t
+            }
+        } else {
+            // init widget with empty values
+            transaction = Transaction().also { transaction ->
+                initUI(transaction)
+            }
+        }
+
+        // enable back button
+        (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+
+        return binding.root
+    }
+
+    private fun initUI(t: Transaction) {
+        with(binding) {
+            edittextAmount.setText("%.02f".format((t.amount.toFloat() / 100)))
+            tvCategory.text = t.categoryName
+            switchExpenseType.isChecked =
+                t.expenseType == Transaction.EXPENSE_TYPE_EXPENSE
+            switchCurrency.isChecked = t.currency == Transaction.CURRENCY_TYPE_NZD
+            tvDate.text = Util.calendar2String(t.date)
             transaction = t
         }
-        val transactionId = safeArgs.transactionId
+    }
 
-        binding.categoryContainer.setOnClickListener {
-            findNavController().navigate(R.id.action_select_category)
-        }
+    private fun TransactionDetailFragment.setupClickListeners() {
+        with(binding) {
+            binding.categoryContainer.setOnClickListener {
+                findNavController().navigate(R.id.action_select_category)
+            }
 
-        binding.apply {
+            switchCurrency.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    switchCurrency.text = Transaction.CURRENCY_TYPE_NZD
+                } else {
+                    switchCurrency.text = Transaction.CURRENCY_TYPE_USD
+                }
+            }
 
             saveBtn.setOnClickListener {
                 viewModel.save()
@@ -78,39 +117,26 @@ class TransactionDetailFragment : Fragment() {
                     .setNegativeButton(R.string.cancel, null).show()
             }
 
-            currencySwitch.setOnCheckedChangeListener { _, isChecked ->
+            switchExpenseType.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    currencySwitch.text = Transaction.CURRENCY_TYPE_NZD
+                    switchExpenseType.text = getString(R.string.expense_type_expense)
                 } else {
-                    currencySwitch.text = Transaction.CURRENCY_TYPE_USD
+                    switchExpenseType.text = getString(R.string.expense_type_income)
                 }
             }
 
-            expenseTypeSwitch.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    expenseTypeSwitch.text = getString(R.string.expense_type_expense)
-                } else {
-                    expenseTypeSwitch.text = getString(R.string.expense_type_income)
-                }
-            }
-
+            // TODO use normal DatePicker to be able to select Month,Year and Day
             dateContainer.setOnClickListener {
                 MonthYearPickerDialog().apply {
                     setListener { _, year, month, dayOfMonth ->
                         Log.e("Robin", "year=$year, month=$month, day=$dayOfMonth")
                         val calendar = Calendar.getInstance()
                         calendar.set(year, month, 1)
-                        date.text = String.format("%02d/%d", month, year)
+                        tvDate.text = String.format("%02d/%d", month, year)
                     }
                 }.show(requireFragmentManager(), "MonthYearPickerDialog")
             }
         }
-
-        // enable back button
-        (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setHasOptionsMenu(true)
-
-        return binding.root
     }
 
     /**

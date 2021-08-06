@@ -41,7 +41,7 @@ class TransactionListFragment : Fragment() {
             navigateToNewTransaction()
         }
 
-        binding.date.setOnClickListener {
+        binding.tvDate.setOnClickListener {
             showDatePicker()
         }
 

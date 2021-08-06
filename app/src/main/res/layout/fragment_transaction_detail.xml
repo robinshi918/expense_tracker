@@ -40,7 +40,7 @@
                     android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
 
                     <TextView
-                        android:id="@+id/value_title"
+                        android:id="@+id/tv_amount_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title_value"
@@ -51,7 +51,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/value"
+                        android:id="@+id/edittext_amount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
@@ -60,7 +60,8 @@
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/value_title"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@id/tv_amount_title"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="100" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -83,7 +84,7 @@
                     android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
 
                     <TextView
-                        android:id="@+id/category_title"
+                        android:id="@+id/tv_category_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title_category"
@@ -105,14 +106,14 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/category"
+                        android:id="@+id/tv_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/category_next_image"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Entertainment"
-                        android:textSize="20sp"/>
+                        tools:text="Entertainment" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -132,7 +133,7 @@
                     android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
 
                     <TextView
-                        android:id="@+id/currency_title"
+                        android:id="@+id/tv_currency_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title_currency"
@@ -143,15 +144,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/currency_switch"
+                        android:id="@+id/switch_currency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="NZD"
                         tools:checked="true"
-                        android:textSize="20sp"/>
+                        tools:text="NZD" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -174,7 +175,7 @@
                     android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
 
                     <TextView
-                        android:id="@+id/expense_type_title"
+                        android:id="@+id/tv_expense_type_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title_expense_type"
@@ -185,15 +186,15 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/expense_type_switch"
+                        android:id="@+id/switch_expense_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Income"
                         tools:checked="true"
-                        android:textSize="20sp"/>
+                        tools:text="Income" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -213,7 +214,7 @@
                     android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
 
                     <TextView
-                        android:id="@+id/date_title"
+                        android:id="@+id/tv_date_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title_date"
@@ -235,14 +236,14 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/date"
+                        android:id="@+id/tv_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/date_next_image"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Aug 03, 2021"
-                        android:textSize="20sp"/>
+                        tools:text="Aug 03, 2021" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -257,6 +258,7 @@
         android:id="@+id/action_btn_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fab_bottom_margin"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -267,7 +269,6 @@
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Save changes"
             android:src="@drawable/save_icon" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -275,9 +276,7 @@
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginBottom="30dp"
-            android:contentDescription="Delete transaction"
+            android:layout_marginStart="@dimen/transaction_detail_fab_margin_between"
             android:src="@drawable/delete_btn" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

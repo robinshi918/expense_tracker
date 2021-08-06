@@ -39,7 +39,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/category"
+                android:id="@+id/tv_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="15dp"
@@ -48,13 +48,13 @@
                 app:layout_constraintTop_toTopOf="@id/expense_type" />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="15dp"
                 android:text="Aug 2021"
                 app:layout_constraintStart_toEndOf="@id/expense_type"
-                app:layout_constraintTop_toBottomOf="@id/category" />
+                app:layout_constraintTop_toBottomOf="@id/tv_category" />
 
             <TextView
                 android:id="@+id/amount"
