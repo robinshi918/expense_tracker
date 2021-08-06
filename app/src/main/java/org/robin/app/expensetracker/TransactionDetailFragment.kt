@@ -1,13 +1,12 @@
 package org.robin.app.expensetracker
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,10 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import org.robin.app.expensetracker.databinding.FragmentTransactionDetailBinding
-import org.robin.app.expensetracker.viewmodel.TransactionDetailViewModel
 import org.robin.app.expensetracker.ui.MonthYearPickerDialog
-
-
+import org.robin.app.expensetracker.viewmodel.TransactionDetailViewModel
 
 
 /**
@@ -55,10 +52,19 @@ class TransactionDetailFragment : Fragment() {
 
             saveBtn.setOnClickListener {
                 detailViewModel.save()
+                findNavController().navigateUp()
             }
 
             deleteBtn.setOnClickListener {
-                detailViewModel.delete()
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Delete Transaction")
+                    .setMessage("Do you really want to delete this transaction?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(R.string.ok) { _, _ ->
+                        detailViewModel.delete()
+                        findNavController().navigateUp()
+                    }
+                    .setNegativeButton(R.string.cancel, null).show()
             }
 
             currencySwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -79,9 +85,9 @@ class TransactionDetailFragment : Fragment() {
 
             dateContainer.setOnClickListener {
                 val pd = MonthYearPickerDialog().apply {
-                    setListener {view, year, month, dayOfMonth ->
+                    setListener { view, year, month, dayOfMonth ->
                         Log.e("Robin", "year=$year, month=$month, day=$dayOfMonth")
-                         }
+                    }
 
                 }.show(requireFragmentManager(), "MonthYearPickerDialog")
             }

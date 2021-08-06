@@ -20,7 +20,7 @@ interface ExchangeRateService {
     suspend fun getRate(
         @Query("access_key") query: String = "08ae8c2209048c3e15396204ae30e2cc",
         @Query("format") page: Int = 1
-    ) : Response
+    ): Response
 
     companion object {
         private const val BASE_URL = "http://api.currencylayer.com/"

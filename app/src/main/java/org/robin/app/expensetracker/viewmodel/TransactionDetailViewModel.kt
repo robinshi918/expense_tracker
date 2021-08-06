@@ -8,12 +8,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.internal.connection.Exchange
 import org.robin.app.expensetracker.api.ExchangeRateService
 import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.Transaction
 import javax.inject.Inject
-import kotlin.concurrent.thread
 
 /**
  *
@@ -25,14 +23,14 @@ class TransactionDetailViewModel @Inject internal constructor(
     savedStateHandle: SavedStateHandle,
     private val repo: Repository,
     private val service: ExchangeRateService
-): ViewModel() {
+) : ViewModel() {
 
     private val transactionId: Int = savedStateHandle.get<Int>(TRANSACTION_ID_SAVED_STATE_KEY)!!
     val transaction = repo.getTransactionById(transactionId).asLiveData()
 
     fun save() {
 
-        val t = Transaction(0, "sport", 100, 1, "NZD")
+        val t = Transaction(0, "sport", 100, Transaction.EXPENSE_TYPE_EXPENSE, "NZD")
         viewModelScope.launch(Dispatchers.IO) {
             repo.setTransaction(t)
         }
@@ -47,7 +45,10 @@ class TransactionDetailViewModel @Inject internal constructor(
     }
 
     fun delete() {
-        TODO("implement delete")
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.deleteTransactionById(transactionId)
+        }
+
     }
 
     private fun testNetworkService() {

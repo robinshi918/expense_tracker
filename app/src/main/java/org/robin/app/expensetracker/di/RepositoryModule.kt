@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.robin.app.expensetracker.data.RepositoryImpl
 import org.robin.app.expensetracker.data.Repository
+import org.robin.app.expensetracker.data.RepositoryImpl
 
 /**
  *

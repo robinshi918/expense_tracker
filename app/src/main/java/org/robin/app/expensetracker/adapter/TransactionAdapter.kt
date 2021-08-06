@@ -56,6 +56,13 @@ class TransactionAdapter :
         fun bind(t: Transaction) {
             with(binding) {
                 transaction = t
+
+                if (t.expenseType == Transaction.EXPENSE_TYPE_EXPENSE) {
+                    expenseType.setImageResource(R.drawable.minus_icon)
+                } else {
+                    expenseType.setImageResource(R.drawable.plus_icon)
+                }
+
                 executePendingBindings()
             }
         }

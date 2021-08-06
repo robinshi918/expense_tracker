@@ -23,4 +23,9 @@ data class Transaction(
     override fun toString(): String {
         return "Transaction(categoryId=$categoryId, categoryName='$categoryName', amount=$amount, expenseType=$expenseType, currency='$currency', transactionId=$transactionId)"
     }
+
+    companion object {
+        const val EXPENSE_TYPE_INCOME = 1
+        const val EXPENSE_TYPE_EXPENSE = 2
+    }
 }
