@@ -7,7 +7,6 @@
     <!--Transaction Detail-->
     <string name="delete_transaction_dialog_title">Delete Transaction</string>
     <string name="delete_transaction_dialog_body">Do you really want to delete this transaction?</string>
-    <string name="transaction_deleted">Transaction deleted.</string>
     <string name="expense_type_expense">Expense</string>
     <string name="expense_type_income">Income</string>
     <string name="title_value">Value</string>

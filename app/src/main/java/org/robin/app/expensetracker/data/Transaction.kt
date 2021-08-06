@@ -12,14 +12,13 @@ import java.util.*
  */
 @Entity(tableName = "transaction")
 data class Transaction(
-    @ColumnInfo(name = "categoryId") val categoryId: Int = Category.INVALID_CATEGORY_ID,
-    @ColumnInfo(name = "categoryName") val categoryName: String = "",
-    @ColumnInfo(name = "amount") val amount: Int = 0,
-    @ColumnInfo(name = "expenseType") val expenseType: Int = EXPENSE_TYPE_EXPENSE,
-    @ColumnInfo(name = "currency") val currency: String = CURRENCY_TYPE_NZD,
+    @ColumnInfo(name = "categoryId") var categoryId: Int = Category.INVALID_CATEGORY_ID,
+    @ColumnInfo(name = "categoryName") var categoryName: String = "",
+    @ColumnInfo(name = "amount") var amount: Int = 0,
+    @ColumnInfo(name = "expenseType") var expenseType: Int = EXPENSE_TYPE_EXPENSE,
+    @ColumnInfo(name = "currency") var currency: String = CURRENCY_TYPE_NZD,
     @ColumnInfo(name = "date") val date: Calendar = Calendar.getInstance(),
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "transactionId") var transactionId: Int = 0,
-    //val date: Date,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "transactionId") var transactionId: Int = DEFAULT_TRANSACTION_ID,
 ) {
 
     override fun toString(): String {
@@ -27,7 +26,7 @@ data class Transaction(
     }
 
     companion object {
-        const val INVALID_TRANSACTION_ID = -1
+        const val DEFAULT_TRANSACTION_ID = 0
 
         const val EXPENSE_TYPE_INCOME = 1
         const val EXPENSE_TYPE_EXPENSE = 2

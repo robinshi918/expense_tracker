@@ -44,6 +44,13 @@ class TransactionDetailViewModel @Inject internal constructor(
         }*/
     }
 
+    fun save(transaction: Transaction): Boolean {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.setTransaction(transaction)
+        }
+        return true
+    }
+
     fun delete() {
         viewModelScope.launch(Dispatchers.IO) {
             repo.deleteTransactionById(transactionId)

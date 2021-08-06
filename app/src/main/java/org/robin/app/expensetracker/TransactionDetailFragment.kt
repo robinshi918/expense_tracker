@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,13 +29,18 @@ import java.util.*
 @AndroidEntryPoint
 class TransactionDetailFragment : Fragment() {
 
+    companion object {
+        // fragment argument 'transactionId' is -1 if user wants to create a new transaction
+        const val INVALID_TRANSACTION_ID = -1
+    }
+
     private val viewModel: TransactionDetailViewModel by viewModels()
     private val safeArgs: TransactionDetailFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentTransactionDetailBinding
 
-    private var transaction: Transaction? = null
-    private var transactionId: Int = Transaction.INVALID_TRANSACTION_ID
+    private lateinit var transaction: Transaction
+    private var transactionId: Int = INVALID_TRANSACTION_ID
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -50,7 +54,8 @@ class TransactionDetailFragment : Fragment() {
         setupClickListeners()
 
         transactionId = safeArgs.transactionId
-        if (transactionId != Transaction.INVALID_TRANSACTION_ID) {
+
+        if (transactionId != INVALID_TRANSACTION_ID) {
             // init widget values with data from database
             viewModel.transaction.observe(viewLifecycleOwner) { t: Transaction ->
                 initUI(t)
@@ -74,20 +79,30 @@ class TransactionDetailFragment : Fragment() {
         with(binding) {
             edittextAmount.setText("%.02f".format((t.amount.toFloat() / 100)))
             tvCategory.text = t.categoryName
+
+            switchExpenseType.isChecked = true
             switchExpenseType.isChecked =
                 t.expenseType == Transaction.EXPENSE_TYPE_EXPENSE
-            switchCurrency.isChecked = t.currency == Transaction.CURRENCY_TYPE_NZD
+
+            switchCurrency.isChecked = true
+            switchCurrency.isChecked =
+                t.currency == Transaction.CURRENCY_TYPE_NZD
             tvDate.text = Util.calendar2String(t.date)
             transaction = t
+
+            deleteBtn.visibility = if (transactionId == INVALID_TRANSACTION_ID)
+                View.GONE else View.VISIBLE
         }
     }
 
-    private fun TransactionDetailFragment.setupClickListeners() {
+    private fun setupClickListeners() {
         with(binding) {
-            binding.categoryContainer.setOnClickListener {
+
+            categoryContainer.setOnClickListener {
                 findNavController().navigate(R.id.action_select_category)
             }
 
+            // TODO replace this widget from Switch to DropDownList to support more currencies
             switchCurrency.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     switchCurrency.text = Transaction.CURRENCY_TYPE_NZD
@@ -97,7 +112,18 @@ class TransactionDetailFragment : Fragment() {
             }
 
             saveBtn.setOnClickListener {
-                viewModel.save()
+
+                with(transaction) {
+                    amount = (edittextAmount.text.toString().toFloat() * 100).toInt()
+                    currency =
+                        if (switchCurrency.isChecked) Transaction.CURRENCY_TYPE_NZD else Transaction.CURRENCY_TYPE_USD
+                    expenseType = if (switchExpenseType.isChecked)
+                        Transaction.EXPENSE_TYPE_EXPENSE else Transaction.EXPENSE_TYPE_INCOME
+                    categoryId = -1            //TODO get real category ID
+                    categoryName = "Unknown"   //TODO get real category name
+                }
+
+                viewModel.save(transaction)
                 findNavController().navigateUp()
             }
 
@@ -107,13 +133,10 @@ class TransactionDetailFragment : Fragment() {
                     .setMessage(getString(R.string.delete_transaction_dialog_body))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(R.string.ok) { _, _ ->
+
                         viewModel.delete()
+
                         findNavController().navigateUp()
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.transaction_deleted),
-                            Toast.LENGTH_LONG
-                        ).show()
                     }
                     .setNegativeButton(R.string.cancel, null).show()
             }
@@ -129,7 +152,7 @@ class TransactionDetailFragment : Fragment() {
             dateContainer.setOnClickListener {
 
                 val datePickerDialog: MyDatePickerDialog =
-                    if (transactionId == Transaction.INVALID_TRANSACTION_ID) {
+                    if (transactionId == INVALID_TRANSACTION_ID) {
                         MyDatePickerDialog()
                     } else {
                         val year = transaction!!.date[Calendar.YEAR]
@@ -147,7 +170,6 @@ class TransactionDetailFragment : Fragment() {
                         date[Calendar.DAY_OF_MONTH] = calendar[Calendar.DAY_OF_MONTH]
                         tvDate.text = Util.calendar2String(date)
                     }
-
                 }
                 datePickerDialog.show(requireFragmentManager(), "MonthYearPickerDialog")
             }

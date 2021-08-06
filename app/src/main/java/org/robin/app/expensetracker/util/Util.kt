@@ -18,10 +18,5 @@ class Util {
         fun calendar2StringWithoutDay(calendar: Calendar): String {
             return SimpleDateFormat("MM/yyyy").format(calendar.time)
         }
-
-        fun string2Calendar(dateString: String): Calendar {
-            TODO()
-        }
-
     }
 }

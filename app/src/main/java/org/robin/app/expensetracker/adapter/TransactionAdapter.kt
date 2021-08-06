@@ -12,6 +12,7 @@ import org.robin.app.expensetracker.R
 import org.robin.app.expensetracker.TransactionListFragmentDirections
 import org.robin.app.expensetracker.data.Transaction
 import org.robin.app.expensetracker.databinding.ListItemTransactionBinding
+import org.robin.app.expensetracker.util.Util
 
 /**
  *
@@ -62,6 +63,9 @@ class TransactionAdapter :
                 } else {
                     expenseType.setImageResource(R.drawable.plus_icon)
                 }
+
+                tvDate.text = Util.calendar2String(t.date)
+                amount.text = "%.02f".format((t.amount.toFloat() / 100))
 
                 executePendingBindings()
             }
