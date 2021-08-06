@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="org.robin.app.expensetracker.data.Transaction" />
+
         <variable
             name="viewModel"
             type="org.robin.app.expensetracker.viewmodel.TransactionDetailViewModel" />
@@ -13,8 +15,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="30dp">
+        android:layout_height="match_parent">
 
         <!--    TODO remove all hardcoded dp values  -->
         <!--    TODO remove all hardcoded strings    -->
@@ -53,7 +54,7 @@
                             android:id="@+id/value_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Value"
+                            android:text="@string/title_value"
                             android:textSize="@dimen/transaction_detail_title_text_size"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,8 +68,8 @@
                             android:layout_marginStart="30dp"
                             android:gravity="center_horizontal"
                             android:inputType="numberDecimal"
+                            android:text="@{Integer.toString(viewModel.transaction.amount)}"
                             android:textSize="20sp"
-
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/value_title"
@@ -97,11 +98,22 @@
                             android:id="@+id/category_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Category"
+                            android:text="@string/title_category"
                             android:textSize="@dimen/transaction_detail_title_text_size"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/category_next_image"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/next_icon"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -109,7 +121,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/category_next_image"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="Entertainment" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -134,7 +146,7 @@
                             android:id="@+id/currency_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Currency"
+                            android:text="@string/title_currency"
                             android:textSize="@dimen/transaction_detail_title_text_size"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -145,6 +157,7 @@
                             android:id="@+id/currency_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="@{viewModel.transaction.currency.equals(`NZD`)}"
                             android:text="@{viewModel.transaction.currency}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +188,7 @@
                             android:id="@+id/expense_type_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Expense Type"
+                            android:text="@string/title_expense_type"
                             android:textSize="@dimen/transaction_detail_title_text_size"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -186,6 +199,7 @@
                             android:id="@+id/expense_type_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="@{viewModel.transaction.expenseType==1}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -221,11 +235,22 @@
                             android:id="@+id/date_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date"
+                            android:text="@string/title_date"
                             android:textSize="@dimen/transaction_detail_title_text_size"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/date_next_image"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/next_icon"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -233,7 +258,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/date_next_image"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="Aug 03, 2021" />
 

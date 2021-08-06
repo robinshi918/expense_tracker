@@ -1,4 +1,4 @@
-package org.robin.app.expensetracker.data.exchange
+package org.robin.app.expensetracker.data
 
 import com.google.gson.annotations.SerializedName
 
@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * @author Robin Shi
  * @since 6/08/21
  */
-data class Response(
+data class ExchangeRateResponse(
     @field:SerializedName("success") val success: Boolean,
     @field:SerializedName("terms") val terms: String,
     @field:SerializedName("privacy") val privacy: String,

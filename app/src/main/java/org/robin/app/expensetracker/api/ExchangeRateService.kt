@@ -1,6 +1,6 @@
 package org.robin.app.expensetracker.api
 
-import org.robin.app.expensetracker.data.exchange.Response
+import org.robin.app.expensetracker.data.ExchangeRateResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -20,7 +20,7 @@ interface ExchangeRateService {
     suspend fun getRate(
         @Query("access_key") query: String = "08ae8c2209048c3e15396204ae30e2cc",
         @Query("format") page: Int = 1
-    ): Response
+    ): ExchangeRateResponse
 
     companion object {
         private const val BASE_URL = "http://api.currencylayer.com/"

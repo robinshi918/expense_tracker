@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import org.robin.app.expensetracker.api.ExchangeRateService
 import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.Transaction
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -30,7 +31,7 @@ class TransactionDetailViewModel @Inject internal constructor(
 
     fun save() {
 
-        val t = Transaction(0, "sport", 100, Transaction.EXPENSE_TYPE_EXPENSE, "NZD")
+        val t = Transaction(0, "sport", 100, Transaction.EXPENSE_TYPE_EXPENSE, "NZD", Calendar.getInstance())
         viewModelScope.launch(Dispatchers.IO) {
             repo.setTransaction(t)
         }
