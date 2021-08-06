@@ -1,308 +1,289 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
+    <!--    TODO remove all hardcoded dp values  -->
+    <!--    TODO remove all hardcoded strings    -->
+    <!--    TODO add contentDescriptions         -->
 
-        <import type="org.robin.app.expensetracker.data.Transaction" />
-
-        <variable
-            name="viewModel"
-            type="org.robin.app.expensetracker.viewmodel.TransactionDetailViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--    TODO remove all hardcoded dp values  -->
-        <!--    TODO remove all hardcoded strings    -->
-        <!--    TODO add contentDescriptions         -->
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/transaction_detail_start_padding"
-                android:paddingEnd="@dimen/transaction_detail_end_padding">
-
-                <!--value container-->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/value_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/transaction_detail_row_height"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/transaction_detail_row_height"
-                        android:paddingTop="@dimen/transaction_detail_row_padding_top"
-                        android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
-
-                        <TextView
-                            android:id="@+id/value_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/title_value"
-                            android:textSize="@dimen/transaction_detail_title_text_size"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <EditText
-                            android:id="@+id/value"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:gravity="center_horizontal"
-                            android:inputType="numberDecimal"
-                            android:text="@{Integer.toString(viewModel.transaction.amount)}"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/value_title"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="100" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-
-                <include layout="@layout/divider" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/category_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/transaction_detail_row_height"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/transaction_detail_row_height"
-                        android:paddingTop="@dimen/transaction_detail_row_padding_top"
-                        android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
-
-                        <TextView
-                            android:id="@+id/category_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/title_category"
-                            android:textSize="@dimen/transaction_detail_title_text_size"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/category_next_image"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:src="@drawable/next_icon"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/category"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/category_next_image"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="Entertainment" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <include layout="@layout/divider" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/currency_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/transaction_detail_row_height"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/transaction_detail_row_height"
-                        android:paddingTop="@dimen/transaction_detail_row_padding_top"
-                        android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
-
-                        <TextView
-                            android:id="@+id/currency_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/title_currency"
-                            android:textSize="@dimen/transaction_detail_title_text_size"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/currency_switch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="@{viewModel.transaction.currency.equals(`NZD`)}"
-                            android:text="@{viewModel.transaction.currency}"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="NZD" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-
-                <include layout="@layout/divider" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/expense_type_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/transaction_detail_row_height"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/transaction_detail_row_height"
-                        android:paddingTop="@dimen/transaction_detail_row_padding_top"
-                        android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
-
-                        <TextView
-                            android:id="@+id/expense_type_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/title_expense_type"
-                            android:textSize="@dimen/transaction_detail_title_text_size"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/expense_type_switch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="@{viewModel.transaction.expenseType==1}"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/expense_type_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/expense_type_switch"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="expense" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <include layout="@layout/divider" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/date_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/transaction_detail_row_height"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/transaction_detail_row_height"
-                        android:paddingTop="@dimen/transaction_detail_row_padding_top"
-                        android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
-
-                        <TextView
-                            android:id="@+id/date_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/title_date"
-                            android:textSize="@dimen/transaction_detail_title_text_size"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/date_next_image"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:src="@drawable/next_icon"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/date_next_image"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="Aug 03, 2021" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <include layout="@layout/divider" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </ScrollView>
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/action_btn_container"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:orientation="vertical"
+            android:paddingStart="@dimen/transaction_detail_start_padding"
+            android:paddingEnd="@dimen/transaction_detail_end_padding">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/save_btn"
-                style="@style/Widget.MaterialComponents.FloatingActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="Save changes"
-                android:src="@drawable/save_icon" />
+            <!--value container-->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/value_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/transaction_detail_row_height"
+                android:clickable="true"
+                android:focusable="true">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/delete_btn"
-                style="@style/Widget.MaterialComponents.FloatingActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginBottom="30dp"
-                android:contentDescription="Delete transaction"
-                android:src="@drawable/delete_btn" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/transaction_detail_row_height"
+                    android:paddingTop="@dimen/transaction_detail_row_padding_top"
+                    android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
+
+                    <TextView
+                        android:id="@+id/value_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_value"
+                        android:textSize="@dimen/transaction_detail_title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:gravity="center_horizontal"
+                        android:inputType="numberDecimal"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/value_title"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="100" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <include layout="@layout/divider" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/category_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/transaction_detail_row_height"
+                android:clickable="true"
+                android:focusable="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/transaction_detail_row_height"
+                    android:paddingTop="@dimen/transaction_detail_row_padding_top"
+                    android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
+
+                    <TextView
+                        android:id="@+id/category_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_category"
+                        android:textSize="@dimen/transaction_detail_title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/category_next_image"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/next_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/category_next_image"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Entertainment"
+                        android:textSize="20sp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <include layout="@layout/divider" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/currency_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/transaction_detail_row_height"
+                android:clickable="true"
+                android:focusable="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/transaction_detail_row_height"
+                    android:paddingTop="@dimen/transaction_detail_row_padding_top"
+                    android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
+
+                    <TextView
+                        android:id="@+id/currency_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_currency"
+                        android:textSize="@dimen/transaction_detail_title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/currency_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="NZD"
+                        tools:checked="true"
+                        android:textSize="20sp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <include layout="@layout/divider" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/expense_type_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/transaction_detail_row_height"
+                android:clickable="true"
+                android:focusable="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/transaction_detail_row_height"
+                    android:paddingTop="@dimen/transaction_detail_row_padding_top"
+                    android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
+
+                    <TextView
+                        android:id="@+id/expense_type_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_expense_type"
+                        android:textSize="@dimen/transaction_detail_title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/expense_type_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Income"
+                        tools:checked="true"
+                        android:textSize="20sp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <include layout="@layout/divider" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/date_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/transaction_detail_row_height"
+                android:clickable="true"
+                android:focusable="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/transaction_detail_row_height"
+                    android:paddingTop="@dimen/transaction_detail_row_padding_top"
+                    android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
+
+                    <TextView
+                        android:id="@+id/date_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_date"
+                        android:textSize="@dimen/transaction_detail_title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/date_next_image"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/next_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/date_next_image"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Aug 03, 2021"
+                        android:textSize="20sp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <include layout="@layout/divider" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-</layout>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/action_btn_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/save_btn"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Save changes"
+            android:src="@drawable/save_icon" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/delete_btn"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="Delete transaction"
+            android:src="@drawable/delete_btn" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 
