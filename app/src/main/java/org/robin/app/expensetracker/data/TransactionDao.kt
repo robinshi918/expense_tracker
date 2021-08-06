@@ -14,8 +14,8 @@ interface TransactionDao {
     @Query("SELECT * FROM `transaction`")
     fun getAll(): Flow<List<Transaction>>
 
-    @Query("SELECT * FROM `transaction` WHERE transactionId = :id")
-    fun findById(id: Int): Flow<List<Transaction>>
+    @Query("SELECT * FROM `transaction` WHERE transactionId = :id LIMIT 1")
+    fun findById(id: Int): Flow<Transaction>
 
     // TODO to implement
     /**
@@ -29,4 +29,7 @@ interface TransactionDao {
 
     @Delete
     fun delete(transaction: Transaction)
+
+    @Query("DELETE FROM `transaction` where transactionId = :transactionId")
+    fun deleteById(transactionId: Int)
 }

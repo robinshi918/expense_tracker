@@ -20,9 +20,19 @@ interface Repository {
     fun getTransactionList(month: String): Flow<List<Transaction>>
 
     /**
+     * get a single transaction
+     */
+    fun getTransactionById(id: Int): Flow<Transaction>
+
+    /**
      * add or update a transaction
      */
     fun setTransaction(transaction: Transaction)
+
+    /**
+     * delete transaction by ID
+     */
+    fun deleteTransactionById(transactionId: Int)
 
     /**
      * get budget list for a certain month

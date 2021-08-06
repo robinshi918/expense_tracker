@@ -40,9 +40,6 @@ class TransactionAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-//                // set onclick listener
-
-
             binding.setClickListener { view ->
                 binding.transaction?.transactionId?.let { id ->
                     navigateToTransactionDetail(id, view)

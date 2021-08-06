@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import org.robin.app.expensetracker.utilities.DATABASE_NAME
+import org.robin.app.expensetracker.util.DATABASE_NAME
 
 /**
  *

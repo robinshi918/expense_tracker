@@ -19,9 +19,14 @@ class RepositoryImpl @Inject constructor(
     override fun getTransactionList(month: String): Flow<List<Transaction>> =
         appDatabase.transactionDao().getAll()
 
+    override fun getTransactionById(id: Int): Flow<Transaction> =
+        appDatabase.transactionDao().findById(id)
 
     override fun setTransaction(transaction: Transaction) =
         appDatabase.transactionDao().insert(transaction)
+
+    override fun deleteTransactionById(transactionId: Int) =
+        appDatabase.transactionDao().deleteById(transactionId)
 
     override fun getBudgetList(month: String): Flow<List<Budget>> {
         TODO("Not yet implemented")
