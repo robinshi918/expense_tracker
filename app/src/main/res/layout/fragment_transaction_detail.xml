@@ -71,6 +71,88 @@
             <include layout="@layout/divider" />
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/currency_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/transaction_detail_row_height"
+                android:clickable="true"
+                android:focusable="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/transaction_detail_row_height"
+                    android:paddingTop="@dimen/transaction_detail_row_padding_top"
+                    android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
+
+                    <TextView
+                        android:id="@+id/tv_currency_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_currency"
+                        android:textSize="@dimen/transaction_detail_title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_currency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:checked="true"
+                        tools:text="NZD" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <include layout="@layout/divider" />
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/expense_type_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/transaction_detail_row_height"
+                android:clickable="true"
+                android:focusable="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/transaction_detail_row_height"
+                    android:paddingTop="@dimen/transaction_detail_row_padding_top"
+                    android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
+
+                    <TextView
+                        android:id="@+id/tv_expense_type_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_expense_type"
+                        android:textSize="@dimen/transaction_detail_title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_expense_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:checked="true"
+                        tools:text="Income" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <include layout="@layout/divider" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/category_container"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/transaction_detail_row_height"
@@ -120,87 +202,6 @@
             <include layout="@layout/divider" />
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/currency_container"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/transaction_detail_row_height"
-                android:clickable="true"
-                android:focusable="true">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/transaction_detail_row_height"
-                    android:paddingTop="@dimen/transaction_detail_row_padding_top"
-                    android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
-
-                    <TextView
-                        android:id="@+id/tv_currency_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title_currency"
-                        android:textSize="@dimen/transaction_detail_title_text_size"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switch_currency"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:checked="true"
-                        tools:text="NZD" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-
-            <include layout="@layout/divider" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/expense_type_container"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/transaction_detail_row_height"
-                android:clickable="true"
-                android:focusable="true">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/transaction_detail_row_height"
-                    android:paddingTop="@dimen/transaction_detail_row_padding_top"
-                    android:paddingBottom="@dimen/transaction_detail_row_padding_bottom">
-
-                    <TextView
-                        android:id="@+id/tv_expense_type_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/title_expense_type"
-                        android:textSize="@dimen/transaction_detail_title_text_size"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switch_expense_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:checked="true"
-                        tools:text="Income" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <include layout="@layout/divider" />
-
-            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/date_container"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/transaction_detail_row_height"
@@ -243,7 +244,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/date_next_image"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Aug 03, 2021" />
+                        tools:text="15/08/2021" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
