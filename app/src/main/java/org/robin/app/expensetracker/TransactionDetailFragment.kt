@@ -16,7 +16,7 @@ import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import org.robin.app.expensetracker.data.Transaction
 import org.robin.app.expensetracker.databinding.FragmentTransactionDetailBinding
-import org.robin.app.expensetracker.ui.MonthYearPickerDialog
+import org.robin.app.expensetracker.ui.MyDatePickerDialog
 import org.robin.app.expensetracker.util.Util
 import org.robin.app.expensetracker.viewmodel.TransactionDetailViewModel
 import java.util.*
@@ -36,6 +36,7 @@ class TransactionDetailFragment : Fragment() {
     private lateinit var binding: FragmentTransactionDetailBinding
 
     private var transaction: Transaction? = null
+    private var transactionId: Int = Transaction.INVALID_TRANSACTION_ID
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -48,8 +49,8 @@ class TransactionDetailFragment : Fragment() {
 
         setupClickListeners()
 
-        val transactionId = safeArgs.transactionId
-        if (transactionId != -1) {
+        transactionId = safeArgs.transactionId
+        if (transactionId != Transaction.INVALID_TRANSACTION_ID) {
             // init widget values with data from database
             viewModel.transaction.observe(viewLifecycleOwner) { t: Transaction ->
                 initUI(t)
@@ -125,16 +126,30 @@ class TransactionDetailFragment : Fragment() {
                 }
             }
 
-            // TODO use normal DatePicker to be able to select Month,Year and Day
             dateContainer.setOnClickListener {
-                MonthYearPickerDialog().apply {
-                    setListener { _, year, month, dayOfMonth ->
-                        Log.e("Robin", "year=$year, month=$month, day=$dayOfMonth")
-                        val calendar = Calendar.getInstance()
-                        calendar.set(year, month, 1)
-                        tvDate.text = String.format("%02d/%d", month, year)
+
+                val datePickerDialog: MyDatePickerDialog =
+                    if (transactionId == Transaction.INVALID_TRANSACTION_ID) {
+                        MyDatePickerDialog()
+                    } else {
+                        val year = transaction!!.date[Calendar.YEAR]
+                        val month = transaction!!.date[Calendar.MONTH]
+                        val day = transaction!!.date[Calendar.DAY_OF_MONTH]
+                        MyDatePickerDialog(true, year, month, day)
                     }
-                }.show(requireFragmentManager(), "MonthYearPickerDialog")
+                datePickerDialog.setListener { _, year, month, dayOfMonth ->
+                    Log.e("Robin", "year=$year, month=$month, day=$dayOfMonth")
+                    val calendar = Calendar.getInstance()
+                    calendar.set(year, month, dayOfMonth)
+                    with(transaction!!) {
+                        date[Calendar.YEAR] = calendar[Calendar.YEAR]
+                        date[Calendar.MONTH] = calendar[Calendar.MONTH]
+                        date[Calendar.DAY_OF_MONTH] = calendar[Calendar.DAY_OF_MONTH]
+                        tvDate.text = Util.calendar2String(date)
+                    }
+
+                }
+                datePickerDialog.show(requireFragmentManager(), "MonthYearPickerDialog")
             }
         }
     }

@@ -1,7 +1,6 @@
 package org.robin.app.expensetracker
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,10 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.robin.app.expensetracker.adapter.TransactionAdapter
 import org.robin.app.expensetracker.databinding.FragmentTransactionListBinding
-import org.robin.app.expensetracker.ui.MonthYearPickerDialog
+import org.robin.app.expensetracker.ui.MyDatePickerDialog
+import org.robin.app.expensetracker.util.Util
 import org.robin.app.expensetracker.viewmodel.TransactionListViewModel
+import java.util.*
 
 /**
  *
@@ -59,11 +60,17 @@ class TransactionListFragment : Fragment() {
 
     private fun showDatePicker() {
         // TODO show month picker dialog
-        val pd = MonthYearPickerDialog().apply {
-            setListener { view, year, month, dayOfMonth ->
-                Log.e("Robin", "year=$year, month=$month, day=$dayOfMonth")
-            }
 
+
+        MyDatePickerDialog(false).apply {
+            setListener { _, year, month, dayOfMonth ->
+                val cal = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, year)
+                    set(Calendar.MONTH, month)
+                    set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                }
+                binding.tvDate.text = Util.calendar2StringWithoutDay(cal)
+            }
         }.show(requireFragmentManager(), "MonthYearPickerDialog")
     }
 

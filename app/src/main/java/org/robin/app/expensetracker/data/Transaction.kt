@@ -27,6 +27,8 @@ data class Transaction(
     }
 
     companion object {
+        const val INVALID_TRANSACTION_ID = -1
+
         const val EXPENSE_TYPE_INCOME = 1
         const val EXPENSE_TYPE_EXPENSE = 2
 

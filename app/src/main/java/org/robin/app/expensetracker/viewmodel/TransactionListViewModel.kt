@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.Transaction
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -20,4 +21,9 @@ class TransactionListViewModel @Inject internal constructor(
     // TODO only show the transactions by month
     val transactionList: LiveData<List<Transaction>> =
         repo.getTransactionList("").asLiveData()
+
+
+    fun switchMonth(cal: Calendar) {
+        TODO("switch month and re-load transaction list")
+    }
 }
