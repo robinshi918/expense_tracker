@@ -119,7 +119,7 @@ class TransactionDetailFragment : Fragment() {
                         if (switchCurrency.isChecked) Transaction.CURRENCY_TYPE_NZD else Transaction.CURRENCY_TYPE_USD
                     expenseType = if (switchExpenseType.isChecked)
                         Transaction.EXPENSE_TYPE_EXPENSE else Transaction.EXPENSE_TYPE_INCOME
-                    categoryId = -1            //TODO get real category ID
+                    categoryId = 0            //TODO get real category ID
                     categoryName = "Unknown"   //TODO get real category name
                 }
                 try {

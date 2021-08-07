@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class NetworkModule {
     @Singleton
     @Provides
-    fun provideUnsplashService(): ExchangeRateService {
+    fun provideExchangeRateService(): ExchangeRateService {
         return ExchangeRateService.create()
     }
 }

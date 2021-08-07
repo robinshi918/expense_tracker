@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import org.robin.app.expensetracker.api.ExchangeRateService
 import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.Transaction
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -31,15 +32,17 @@ class TransactionDetailViewModel @Inject internal constructor(
 
     @Throws(IllegalArgumentException::class)
     fun save(t: Transaction) {
-        // validate user input first. Data won't be saved if validation failed.
-        checkUserInput(t)
+        testNetworkService()
+
+        /*checkUserInput(t)
         viewModelScope.launch(Dispatchers.IO) {
             repo.setTransaction(t)
-        }
+        }*/
     }
 
     /**
-     * checks user input and throws an instance of IllegalArgumentException with error message
+     * checks user input and throws an IllegalArgumentException with error message
+     * if user input is not valid.
      */
     @Throws(IllegalArgumentException::class)
     private fun checkUserInput(transaction: Transaction) {
@@ -58,7 +61,8 @@ class TransactionDetailViewModel @Inject internal constructor(
 
     private fun testNetworkService() {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = service.getRate()
+            val date = SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)
+            val response = service.getRate(date)
             Log.e("Robin", "current rate = ${response.getRate("NZD")}")
         }
     }
