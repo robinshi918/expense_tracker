@@ -74,7 +74,7 @@ class MyDatePickerDialog constructor() : DialogFragment() {
         monthPicker.value = cal[Calendar.MONTH] + 1
 
         val year = cal[Calendar.YEAR]
-        yearPicker.minValue = year
+        yearPicker.minValue = 2000
         yearPicker.maxValue = MAX_YEAR
         yearPicker.value = year
 

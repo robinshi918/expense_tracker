@@ -14,5 +14,7 @@
     <string name="title_currency">Currency</string>
     <string name="title_expense_type">Expense Type</string>
     <string name="title_date">Date</string>
+    <string name="error_amount_is_zero">Transaction value can not be zero.</string>
+    <string name="error_please_select_category">Please select a category.</string>
 
 </resources>

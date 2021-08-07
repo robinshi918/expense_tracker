@@ -66,6 +66,9 @@ class TransactionAdapter :
 
                 tvDate.text = Util.calendar2String(t.date)
                 amount.text = "%.02f".format((t.amount.toFloat() / 100))
+                imageviewOtherCurrency.visibility =
+                    if (t.currency == Transaction.CURRENCY_TYPE_USD)
+                        View.VISIBLE else View.INVISIBLE
 
                 executePendingBindings()
             }
