@@ -1,9 +1,44 @@
-{
-  "categories": [
-    "Entertain",
-    "Sports",
-    "Food",
-    "Salary",
-    "Lottery"
-  ]
-}
+[
+  {
+    "name": "Food"
+  },
+  {
+    "name": "Bills"
+  },
+  {
+    "name": "Transportation"
+  },
+  {
+    "name": "Home"
+  },
+  {
+    "name": "Car"
+  },
+  {
+    "name": "Entertainment"
+  },
+  {
+    "name": "Sports"
+  },
+  {
+    "name": "Baby"
+  },
+  {
+    "name": "Salary"
+  },
+  {
+    "name": "Lottery"
+  },
+  {
+    "name": "Sale"
+  },
+  {
+    "name": "Refunds"
+  },
+  {
+    "name": "Rental"
+  },
+  {
+    "name": "Other"
+  }
+]

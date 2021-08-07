@@ -18,9 +18,8 @@ class RepositoryImpl @Inject constructor(
     private val exchangeRateService: ExchangeRateService
 ) : Repository {
 
-    override fun getCategoryList(): Flow<List<Category>> {
-        TODO("Not yet implemented")
-    }
+    override fun getCategoryList(): Flow<List<Category>> =
+        appDatabase.categoryDao().getAllCategory()
 
     override fun getTransactionList(month: String): Flow<List<Transaction>> =
         appDatabase.transactionDao().getAll()

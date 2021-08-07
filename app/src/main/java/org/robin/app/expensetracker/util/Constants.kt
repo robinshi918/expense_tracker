@@ -7,3 +7,4 @@ package org.robin.app.expensetracker.util
  */
 
 const val DATABASE_NAME = "expense-tracker-db"
+const val CATEGORY_DATA_FILENAME = "category.json"

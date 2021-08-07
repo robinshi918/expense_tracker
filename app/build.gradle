@@ -55,6 +55,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    implementation "androidx.work:work-runtime-ktx:$rootProject.workVersion"
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
