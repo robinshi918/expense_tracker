@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -112,7 +113,6 @@ class TransactionDetailFragment : Fragment() {
             }
 
             saveBtn.setOnClickListener {
-
                 with(transaction) {
                     amount = (edittextAmount.text.toString().toFloat() * 100).toInt()
                     currency =
@@ -122,9 +122,12 @@ class TransactionDetailFragment : Fragment() {
                     categoryId = -1            //TODO get real category ID
                     categoryName = "Unknown"   //TODO get real category name
                 }
-
-                viewModel.save(transaction)
-                findNavController().navigateUp()
+                try {
+                    viewModel.save(transaction)
+                    findNavController().navigateUp()
+                } catch (e: IllegalArgumentException) {
+                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+                }
             }
 
             deleteBtn.setOnClickListener {

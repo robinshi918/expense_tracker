@@ -13,7 +13,6 @@ import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.Transaction
 import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.thread
 
 /**
  *
@@ -30,25 +29,25 @@ class TransactionDetailViewModel @Inject internal constructor(
     private val transactionId: Int = savedStateHandle.get<Int>(TRANSACTION_ID_SAVED_STATE_KEY)!!
     val transaction = repo.getTransactionById(transactionId).asLiveData()
 
-    fun save() {
-        val t = Transaction(0, "sport", 100, Transaction.EXPENSE_TYPE_EXPENSE, "NZD", Calendar.getInstance())
+    @Throws(IllegalArgumentException::class)
+    fun save(t: Transaction) {
+        // validate user input first. Data won't be saved if validation failed.
+        checkUserInput(t)
         viewModelScope.launch(Dispatchers.IO) {
             repo.setTransaction(t)
         }
-
-        // TODO
-        /*thread {
-            Log.e("Robin", "save transaction changes. transactionID = $transactionId")
-            val item = repo.getTransactionById(-1)
-            Log.e("Robin", "transactionDetailViewModel No. of Ts = $item")
-        }*/
     }
 
-    fun save(transaction: Transaction): Boolean {
-        viewModelScope.launch(Dispatchers.IO) {
-            repo.setTransaction(transaction)
+    /**
+     * checks user input and throws an instance of IllegalArgumentException with error message
+     */
+    @Throws(IllegalArgumentException::class)
+    private fun checkUserInput(transaction: Transaction) {
+        if (transaction.amount <= 0) {
+            throw IllegalArgumentException("Transaction amount can not be zero.")
+        } else if (transaction.categoryId == -1) {
+            throw IllegalArgumentException("Please select a category.")
         }
-        return true
     }
 
     fun delete() {
