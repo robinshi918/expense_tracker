@@ -12,11 +12,12 @@ import org.robin.app.expensetracker.util.DATABASE_NAME
  * @author Robin Shi
  * @since 5/08/21
  */
-@Database(entities = [Transaction::class], version = 1, exportSchema = false)
+@Database(entities = [Transaction::class, ExchangeRate::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun transactionDao(): TransactionDao
+    abstract fun exchangeRateDao(): ExchangeRateDao
 
     companion object {
         @Volatile

@@ -32,12 +32,10 @@ class TransactionDetailViewModel @Inject internal constructor(
 
     @Throws(IllegalArgumentException::class)
     fun save(t: Transaction) {
-        testNetworkService()
-
-        /*checkUserInput(t)
+        checkUserInput(t)
         viewModelScope.launch(Dispatchers.IO) {
             repo.setTransaction(t)
-        }*/
+        }
     }
 
     /**
@@ -61,9 +59,13 @@ class TransactionDetailViewModel @Inject internal constructor(
 
     private fun testNetworkService() {
         viewModelScope.launch(Dispatchers.IO) {
-            val date = SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)
+            val cal = Calendar.getInstance()
+            cal.set(Calendar.YEAR, 2021)
+            cal.set(Calendar.MONTH, 0)
+            cal.set(Calendar.DAY_OF_MONTH, 1)
+            val date = SimpleDateFormat("yyyy-MM-dd").format(cal.time)
             val response = service.getRate(date)
-            Log.e("Robin", "current rate = ${response.getRate("NZD")}")
+            Log.e("Robin", "rate = ${response.getRate("NZD")}")
         }
     }
 

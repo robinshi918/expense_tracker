@@ -7,6 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import org.robin.app.expensetracker.data.AppDatabase
+import org.robin.app.expensetracker.data.ExchangeRateDao
 import org.robin.app.expensetracker.data.TransactionDao
 import javax.inject.Singleton
 
@@ -28,5 +29,10 @@ class DatabaseModule {
     @Provides
     fun provideTransactionDao(appDatabase: AppDatabase): TransactionDao {
         return appDatabase.transactionDao()
+    }
+
+    @Provides
+    fun provideExchangeRateDao(appDatabase: AppDatabase): ExchangeRateDao {
+        return appDatabase.exchangeRateDao()
     }
 }

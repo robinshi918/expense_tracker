@@ -29,6 +29,10 @@ class CategoryListFragment : Fragment() {
 
         binding = FragmentCategoryListBinding.inflate(inflater, container, false)
 
+        binding.buttonBig.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
 
