@@ -10,9 +10,10 @@ import java.util.*
  * @author Robin Shi
  * @since 7/08/21
  */
-@Entity(tableName = "exchange_rate")
+@Entity(tableName = "exchange_rate", primaryKeys = ["date", "source", "target"])
 data class ExchangeRate(
-    @PrimaryKey @ColumnInfo(name = "date") var date: String,
+    @ColumnInfo(name = "date") var date: String,
     @ColumnInfo(name = "rate") var rate: Float,
-
-    )
+    @ColumnInfo(name = "source") var source: String,
+    @ColumnInfo(name = "target") var target: String,
+)

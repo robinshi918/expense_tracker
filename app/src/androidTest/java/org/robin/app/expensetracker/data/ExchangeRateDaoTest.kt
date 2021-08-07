@@ -21,9 +21,9 @@ class ExchangeRateDaoTest {
     private lateinit var database: AppDatabase
     private lateinit var exchangeRateDao: ExchangeRateDao
 
-    private val rate1 = ExchangeRate("2021-08-07", 1.426523f)
-    private val rate2 = ExchangeRate("2021-01-01", 1.626523f)
-    private val rate3 = ExchangeRate("2021-08-01", 1.526523f)
+    private val rate1 = ExchangeRate("2021-08-07", 1.426523f, "USD", "NZD")
+    private val rate2 = ExchangeRate("2021-01-01", 1.626523f, "USD", "NZD")
+    private val rate3 = ExchangeRate("2021-08-01", 1.526523f, "USD", "NZD")
 
     @Before
     fun createDb() = runBlocking {
@@ -43,21 +43,27 @@ class ExchangeRateDaoTest {
     }
 
     @Test fun testGetRate() = runBlocking {
-        var rate = exchangeRateDao.getRateByDate(rate1.date).first()
+        var rate = exchangeRateDao.getRateByDate(rate1.date, "USD", "NZD").first()
         assert(rate == rate1)
     }
 
     @Test fun testAll() = runBlocking {
         val date = "2021-05-01"
-        val rate = ExchangeRate(date, 1.526523f)
+        val rate = ExchangeRate(date, 1.526523f, "USD", "NZD")
         exchangeRateDao.delete(rate)
 
-        var result = exchangeRateDao.getRateByDate(date).first()
+        var result = exchangeRateDao.getRateByDate(date, "USD", "NZD").first()
         assert(null == result)
 
         exchangeRateDao.insert(rate)
-        result = exchangeRateDao.getRateByDate(date).first()
+        result = exchangeRateDao.getRateByDate(date, "USD", "NZD").first()
         assert(rate == result)
+
+        result = exchangeRateDao.getRateByDate(date, "USD", "CNY").first()
+        assert(null == result)
+
+        result = exchangeRateDao.getRateByDate(date, "CNY", "NZD").first()
+        assert(null == result)
     }
 
 }

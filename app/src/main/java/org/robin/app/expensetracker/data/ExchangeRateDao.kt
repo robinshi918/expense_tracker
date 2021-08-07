@@ -11,8 +11,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExchangeRateDao {
 
-    @Query("SELECT * FROM `exchange_rate` WHERE date = :date")
-    fun getRateByDate(date: String): Flow<ExchangeRate>
+    @Query("SELECT * FROM `exchange_rate` WHERE date = :date AND source = :source AND target = :target")
+    fun getRateByDate(date: String, source: String, target: String): Flow<ExchangeRate>
+
+    @Query("SELECT count(*) FROM `exchange_rate` WHERE date = :date AND source = :source AND target = :target")
+    fun hasRate(date: String, source: String, target: String): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(rate: ExchangeRate)
