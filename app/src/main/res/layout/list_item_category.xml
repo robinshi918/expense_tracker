@@ -16,11 +16,13 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/category_container"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:padding="10dp"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:onClick="@{clickListener}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,7 +37,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Entertainment" />
+                tools:text="Entertainment"
+                android:text="@{category.name}"/>
 
             <include
                 layout="@layout/divider"

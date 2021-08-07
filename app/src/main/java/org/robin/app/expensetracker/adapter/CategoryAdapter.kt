@@ -1,9 +1,12 @@
 package org.robin.app.expensetracker.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,8 +22,12 @@ import org.robin.app.expensetracker.databinding.ListItemCategoryBinding
 class CategoryAdapter :
     ListAdapter<Category, CategoryAdapter.ViewHolder>(CategoryDiffCallback()) {
 
+    companion object {
+        private val TAG = CategoryAdapter::class.java.simpleName
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return CategoryAdapter.ViewHolder(
+        return ViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.list_item_category,
@@ -35,16 +42,16 @@ class CategoryAdapter :
 
         init {
             binding.setClickListener { view ->
-                Toast.makeText(
-                    view.context,
-                    "${binding.category} selected",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Log.d(TAG, "User selected category: ${binding.category!!.name}")
+
+                val bundle = bundleOf("a" to "b")
+                view.findNavController().navigateUp()
             }
         }
 
         fun bind(category: Category) {
-            binding.tvCategoryName.text = category.name
+            binding.category = category
+            binding.executePendingBindings()
         }
     }
 

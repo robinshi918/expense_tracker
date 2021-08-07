@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.robin.app.expensetracker.data.AppDatabase
 import org.robin.app.expensetracker.data.Category
 import org.robin.app.expensetracker.data.Repository
 import javax.inject.Inject

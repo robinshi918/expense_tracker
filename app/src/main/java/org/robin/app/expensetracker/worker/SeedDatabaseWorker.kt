@@ -14,6 +14,8 @@ import org.robin.app.expensetracker.data.Category
 
 /**
  *
+ * This worker class is to initialise 'category' table with hardcoded values
+ * when database is created.
  * @author Robin Shi
  * @since 7/08/21
  */

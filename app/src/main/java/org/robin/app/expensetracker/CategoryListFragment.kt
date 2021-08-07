@@ -10,9 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.robin.app.expensetracker.adapter.CategoryAdapter
-import org.robin.app.expensetracker.adapter.TransactionAdapter
 import org.robin.app.expensetracker.databinding.FragmentCategoryListBinding
-import org.robin.app.expensetracker.databinding.FragmentTransactionListBinding
 import org.robin.app.expensetracker.viewmodel.CategoryListViewModel
 
 /**
@@ -22,6 +20,10 @@ import org.robin.app.expensetracker.viewmodel.CategoryListViewModel
  */
 @AndroidEntryPoint
 class CategoryListFragment : Fragment() {
+
+    companion object {
+        const val CATEGORY_KEY = "category_key"
+    }
 
     private lateinit var binding: FragmentCategoryListBinding
     private val viewModel: CategoryListViewModel by viewModels()
