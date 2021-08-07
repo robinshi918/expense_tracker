@@ -1,12 +1,10 @@
 package org.robin.app.expensetracker.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import org.robin.app.expensetracker.api.ExchangeRateService
 import org.robin.app.expensetracker.data.ExchangeRate
 import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.Transaction
@@ -58,9 +56,13 @@ class TransactionDetailViewModel @Inject internal constructor(
         }
     }
 
-    fun refreshExchangeRate(date: Calendar): Flow<ExchangeRate> {
+    fun getExchangeRate(date: Calendar): Flow<ExchangeRate> {
         val param = SimpleDateFormat("yyyy-MM-dd").format(date.time)
-        return repo.getExchangeRate(param, Transaction.CURRENCY_TYPE_USD, Transaction.CURRENCY_TYPE_NZD)
+        return repo.getExchangeRate(
+            param,
+            Transaction.CURRENCY_TYPE_USD,
+            Transaction.CURRENCY_TYPE_NZD
+        )
     }
 
     companion object {

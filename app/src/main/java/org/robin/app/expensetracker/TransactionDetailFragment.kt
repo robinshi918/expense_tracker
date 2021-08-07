@@ -65,7 +65,7 @@ class TransactionDetailFragment : Fragment() {
                 initUI(t)
                 transaction = t
 
-                viewModel.refreshExchangeRate(transaction.date).asLiveData()
+                viewModel.getExchangeRate(transaction.date).asLiveData()
                     .observe(viewLifecycleOwner, currencyRateObserver)
             }
         } else {
@@ -73,7 +73,7 @@ class TransactionDetailFragment : Fragment() {
             transaction = Transaction().also { transaction ->
                 initUI(transaction)
             }
-            viewModel.refreshExchangeRate(transaction.date).asLiveData()
+            viewModel.getExchangeRate(transaction.date).asLiveData()
                 .observe(viewLifecycleOwner, currencyRateObserver)
         }
 
@@ -89,6 +89,7 @@ class TransactionDetailFragment : Fragment() {
             rate?.let {
                 Log.e("Robin", "rate returned from livedata: ${rate.rate}")
                 binding.tvCurrencyRate.text = "1 USD = ${rate.rate} NZD"
+                transaction.exchangeRate = rate.rate
             }
         }
 
@@ -190,7 +191,7 @@ class TransactionDetailFragment : Fragment() {
                         date[Calendar.DAY_OF_MONTH] = calendar[Calendar.DAY_OF_MONTH]
                         tvDate.text = Util.calendar2String(date)
 
-                        viewModel.refreshExchangeRate(date).asLiveData()
+                        viewModel.getExchangeRate(date).asLiveData()
                             .observe(viewLifecycleOwner, currencyRateObserver)
 
                     }

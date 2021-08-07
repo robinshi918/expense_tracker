@@ -18,6 +18,7 @@ data class Transaction(
     @ColumnInfo(name = "expenseType") var expenseType: Int = EXPENSE_TYPE_EXPENSE,
     @ColumnInfo(name = "currency") var currency: String = CURRENCY_TYPE_NZD,
     @ColumnInfo(name = "date") val date: Calendar = Calendar.getInstance(),
+    @ColumnInfo(name = "exchangeRate") var exchangeRate: Float = 1.0f,
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "transactionId") var transactionId: Int = DEFAULT_TRANSACTION_ID,
 ) {
 
