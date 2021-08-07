@@ -105,6 +105,17 @@
                         tools:checked="true"
                         tools:text="NZD" />
 
+                    <TextView
+                        android:id="@+id/tv_currency_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="-3dp"
+                        android:text="1 USD=1.426523 NZD"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/switch_currency"
+                        tools:text="1 USD=1.426523 NZD" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>

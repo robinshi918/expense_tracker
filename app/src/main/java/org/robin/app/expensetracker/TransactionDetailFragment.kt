@@ -11,9 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import org.robin.app.expensetracker.data.ExchangeRate
 import org.robin.app.expensetracker.data.Transaction
 import org.robin.app.expensetracker.databinding.FragmentTransactionDetailBinding
 import org.robin.app.expensetracker.ui.MyDatePickerDialog
@@ -61,12 +64,17 @@ class TransactionDetailFragment : Fragment() {
             viewModel.transaction.observe(viewLifecycleOwner) { t: Transaction ->
                 initUI(t)
                 transaction = t
+
+                viewModel.refreshExchangeRate(transaction.date).asLiveData()
+                    .observe(viewLifecycleOwner, currencyRateObserver)
             }
         } else {
             // init widget with empty values
             transaction = Transaction().also { transaction ->
                 initUI(transaction)
             }
+            viewModel.refreshExchangeRate(transaction.date).asLiveData()
+                .observe(viewLifecycleOwner, currencyRateObserver)
         }
 
         // enable back button
@@ -75,6 +83,14 @@ class TransactionDetailFragment : Fragment() {
 
         return binding.root
     }
+
+    private val currencyRateObserver: Observer<ExchangeRate> =
+        Observer<ExchangeRate> { rate ->
+            rate?.let {
+                Log.e("Robin", "rate returned from livedata: ${rate.rate}")
+                binding.tvCurrencyRate.text = "1 USD = ${rate.rate} NZD"
+            }
+        }
 
     private fun initUI(t: Transaction) {
         with(binding) {
@@ -107,8 +123,10 @@ class TransactionDetailFragment : Fragment() {
             switchCurrency.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     switchCurrency.text = Transaction.CURRENCY_TYPE_NZD
+                    tvCurrencyRate.visibility = View.GONE
                 } else {
                     switchCurrency.text = Transaction.CURRENCY_TYPE_USD
+                    tvCurrencyRate.visibility = View.VISIBLE
                 }
             }
 
@@ -158,20 +176,23 @@ class TransactionDetailFragment : Fragment() {
                     if (transactionId == INVALID_TRANSACTION_ID) {
                         MyDatePickerDialog()
                     } else {
-                        val year = transaction!!.date[Calendar.YEAR]
-                        val month = transaction!!.date[Calendar.MONTH]
-                        val day = transaction!!.date[Calendar.DAY_OF_MONTH]
+                        val year = transaction.date[Calendar.YEAR]
+                        val month = transaction.date[Calendar.MONTH]
+                        val day = transaction.date[Calendar.DAY_OF_MONTH]
                         MyDatePickerDialog(true, year, month, day)
                     }
                 datePickerDialog.setListener { _, year, month, dayOfMonth ->
-                    Log.e("Robin", "year=$year, month=$month, day=$dayOfMonth")
                     val calendar = Calendar.getInstance()
                     calendar.set(year, month, dayOfMonth)
-                    with(transaction!!) {
+                    with(transaction) {
                         date[Calendar.YEAR] = calendar[Calendar.YEAR]
                         date[Calendar.MONTH] = calendar[Calendar.MONTH]
                         date[Calendar.DAY_OF_MONTH] = calendar[Calendar.DAY_OF_MONTH]
                         tvDate.text = Util.calendar2String(date)
+
+                        viewModel.refreshExchangeRate(date).asLiveData()
+                            .observe(viewLifecycleOwner, currencyRateObserver)
+
                     }
                 }
                 datePickerDialog.show(requireFragmentManager(), "MonthYearPickerDialog")

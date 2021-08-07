@@ -1,14 +1,13 @@
 package org.robin.app.expensetracker.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.robin.app.expensetracker.api.ExchangeRateService
+import org.robin.app.expensetracker.data.ExchangeRate
 import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.Transaction
 import java.text.SimpleDateFormat
@@ -24,11 +23,12 @@ import javax.inject.Inject
 class TransactionDetailViewModel @Inject internal constructor(
     savedStateHandle: SavedStateHandle,
     private val repo: Repository,
-    private val service: ExchangeRateService
 ) : ViewModel() {
 
     private val transactionId: Int = savedStateHandle.get<Int>(TRANSACTION_ID_SAVED_STATE_KEY)!!
     val transaction = repo.getTransactionById(transactionId).asLiveData()
+
+    val exchangeRate = MutableLiveData<ExchangeRate>()
 
     @Throws(IllegalArgumentException::class)
     fun save(t: Transaction) {
@@ -44,8 +44,9 @@ class TransactionDetailViewModel @Inject internal constructor(
      */
     @Throws(IllegalArgumentException::class)
     private fun checkUserInput(transaction: Transaction) {
+        // TODO move hardcoded string to string resource
         if (transaction.amount <= 0) {
-            throw IllegalArgumentException("Transaction amount can not be zero.")
+            throw IllegalArgumentException("Transaction value can not be zero.")
         } else if (transaction.categoryId == -1) {
             throw IllegalArgumentException("Please select a category.")
         }
@@ -57,16 +58,9 @@ class TransactionDetailViewModel @Inject internal constructor(
         }
     }
 
-    private fun testNetworkService() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val cal = Calendar.getInstance()
-            cal.set(Calendar.YEAR, 2021)
-            cal.set(Calendar.MONTH, 0)
-            cal.set(Calendar.DAY_OF_MONTH, 1)
-            val date = SimpleDateFormat("yyyy-MM-dd").format(cal.time)
-            val response = service.getRate(date)
-            Log.e("Robin", "rate = ${response.getRate("NZD")}")
-        }
+    fun refreshExchangeRate(date: Calendar): Flow<ExchangeRate> {
+        val param = SimpleDateFormat("yyyy-MM-dd").format(date.time)
+        return repo.getExchangeRate(param, Transaction.CURRENCY_TYPE_USD, Transaction.CURRENCY_TYPE_NZD)
     }
 
     companion object {

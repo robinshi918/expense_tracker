@@ -38,4 +38,9 @@ interface Repository {
      * get budget list for a certain month
      */
     fun getBudgetList(month: String): Flow<List<Budget>>
+
+    /**
+     * get exchange rate in a certain date for given 2 currencies
+     */
+    fun getExchangeRate(date: String, source: String, target: String): Flow<ExchangeRate>
 }
