@@ -51,7 +51,6 @@ class RepositoryImpl @Inject constructor(
     private suspend fun refreshExchangeRate(date: String, source: String, target: String) {
         // TODO implement an in-memory cache, so no need to check database each time
         val numOfRate = appDatabase.exchangeRateDao().hasRate(date, source, target)
-        Log.e("Robin", "number of exchange rate for $date = $numOfRate")
         if (numOfRate == 0) {
             val response = exchangeRateService.getRate(date)
             Log.d(TAG, "network query result = $response")
@@ -59,7 +58,7 @@ class RepositoryImpl @Inject constructor(
                 val rate = ExchangeRate(date, response.getRate(target)!!, source, target)
                 appDatabase.exchangeRateDao().insert(rate)
             } else {
-                //TODO handle if Web API query fails
+                //TODO handle Web API query failures.
                 Log.e(TAG, "Web query failed. ")
             }
         }

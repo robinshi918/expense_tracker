@@ -32,11 +32,11 @@ class TransactionListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentTransactionListBinding.inflate(inflater, container, false)
 
         val adapter = TransactionAdapter()
         binding.transactionList.adapter = adapter
+        subscribeUi(adapter)
 
         binding.addBtn.setOnClickListener {
             navigateToNewTransaction()
@@ -46,22 +46,22 @@ class TransactionListFragment : Fragment() {
             showDatePicker()
         }
 
+        // TODO load transactions according to month and year
+        binding.tvDate.text = Util.calendar2StringWithoutDay(Calendar.getInstance())
+
+        // hide BACK button in action bar
         (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
-        subscribeUi(adapter, binding)
         return binding.root
     }
 
-    private fun subscribeUi(adapter: TransactionAdapter, binding: FragmentTransactionListBinding) {
+    private fun subscribeUi(adapter: TransactionAdapter) {
         viewModel.transactionList.observe(viewLifecycleOwner) { result ->
             adapter.submitList(result)
         }
     }
 
     private fun showDatePicker() {
-        // TODO show month picker dialog
-
-
         MyDatePickerDialog(false).apply {
             setListener { _, year, month, dayOfMonth ->
                 val cal = Calendar.getInstance().apply {
@@ -75,11 +75,6 @@ class TransactionListFragment : Fragment() {
     }
 
     private fun navigateToNewTransaction() {
-        //TODO jump to new transaction edit page
-        /*val transactionId = 1
-        val action = TransactionListFragmentDirections.showTransactionDetailAction(transactionId)
-        findNavController().navigate(action)*/
-
         findNavController().navigate(R.id.action_show_transaction_detail)
     }
 }
