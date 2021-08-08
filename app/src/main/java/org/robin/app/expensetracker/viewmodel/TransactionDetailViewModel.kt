@@ -45,7 +45,7 @@ class TransactionDetailViewModel @Inject internal constructor(
         // TODO move hardcoded string to string resource
         if (transaction.amount <= 0) {
             throw IllegalArgumentException("Transaction value can not be zero.")
-        } else if (transaction.categoryName.isNullOrEmpty()) {
+        } else if (transaction.categoryName.isEmpty()) {
             throw IllegalArgumentException("Please select a category.")
         }
     }
@@ -57,7 +57,7 @@ class TransactionDetailViewModel @Inject internal constructor(
     }
 
     fun getExchangeRate(date: Calendar): Flow<ExchangeRate> {
-        val param = SimpleDateFormat("yyyy-MM-dd").format(date.time)
+        val param = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(date.time)
         return repo.getExchangeRate(
             param,
             Transaction.CURRENCY_TYPE_USD,

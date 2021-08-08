@@ -12,11 +12,6 @@ import java.util.*
  */
 class UtilTest {
     @Test
-    fun addition_isCorrect() {
-        Assert.assertEquals(4, 2 + 2)
-    }
-
-    @Test
     fun yyyymmdd2Calendar_test() {
         val cal1 = Calendar.getInstance()
         val sdf = SimpleDateFormat("dd/MM/yyyy")
@@ -35,7 +30,6 @@ class UtilTest {
         Assert.assertEquals(month1, month2)
         Assert.assertEquals(day1, day2)
     }
-
 
 
 }

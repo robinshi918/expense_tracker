@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 
 /**
+ * Save historical exchange rates in database as local cache.
  *
  * @author Robin Shi
  * @since 7/08/21

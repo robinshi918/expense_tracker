@@ -3,6 +3,7 @@ package org.robin.app.expensetracker.data
 import kotlinx.coroutines.flow.Flow
 
 /**
+ *  Repository interface that UI layer uses.
  *
  * @author Robin Shi
  * @since 3/08/21

@@ -42,12 +42,14 @@ class ExchangeRateDaoTest {
         database.close()
     }
 
-    @Test fun testGetRate() = runBlocking {
+    @Test
+    fun testGetRate() = runBlocking {
         var rate = exchangeRateDao.getRateByDate(rate1.date, "USD", "NZD").first()
         assert(rate == rate1)
     }
 
-    @Test fun testAll() = runBlocking {
+    @Test
+    fun testAll() = runBlocking {
         val date = "2021-05-01"
         val rate = ExchangeRate(date, 1.526523f, "USD", "NZD")
         exchangeRateDao.delete(rate)

@@ -3,6 +3,7 @@ package org.robin.app.expensetracker.data
 import com.google.gson.annotations.SerializedName
 
 /**
+ * Response object of api.currencylay.com
  *
  * @author Robin Shi
  * @since 6/08/21

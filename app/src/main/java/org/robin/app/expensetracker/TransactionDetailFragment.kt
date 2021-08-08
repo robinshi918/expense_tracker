@@ -62,13 +62,9 @@ class TransactionDetailFragment : Fragment() {
         binding = FragmentTransactionDetailBinding.inflate(inflater, container, false)
 
         setupClickListeners()
-
         acceptCategorySelectionResult()
-
         fillUiWithData()
-
-        enableBackButton()
-
+        showBackButton()
         return binding.root
     }
 
@@ -88,7 +84,7 @@ class TransactionDetailFragment : Fragment() {
         }
     }
 
-    private fun enableBackButton() {
+    private fun showBackButton() {
         // enable back button
         (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
@@ -119,7 +115,7 @@ class TransactionDetailFragment : Fragment() {
             switchCurrency.isChecked = true
             switchCurrency.isChecked =
                 t.currency == Transaction.CURRENCY_TYPE_NZD
-            tvDate.text = Util.calendar2String(t.date)
+            tvDate.text = Util.calendar2ddmmyyyyString(t.date)
             transaction = t
 
             btnDelete.visibility = if (transactionId == INVALID_TRANSACTION_ID)
@@ -210,12 +206,12 @@ class TransactionDetailFragment : Fragment() {
                         date[Calendar.YEAR] = calendar[Calendar.YEAR]
                         date[Calendar.MONTH] = calendar[Calendar.MONTH]
                         date[Calendar.DAY_OF_MONTH] = calendar[Calendar.DAY_OF_MONTH]
-                        tvDate.text = Util.calendar2String(date)
+                        tvDate.text = Util.calendar2ddmmyyyyString(date)
 
                         getExchangeRate()
                     }
                 }
-                datePickerDialog.show(requireFragmentManager(), "DayMonthYearPickerDialog")
+                datePickerDialog.show(childFragmentManager, "DayMonthYearPickerDialog")
             }
         }
     }

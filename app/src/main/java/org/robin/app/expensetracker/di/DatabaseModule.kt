@@ -12,7 +12,7 @@ import org.robin.app.expensetracker.data.TransactionDao
 import javax.inject.Singleton
 
 /**
- *
+ * provider module to create db and dao instances
  * @author Robin Shi
  * @since 5/08/21
  */

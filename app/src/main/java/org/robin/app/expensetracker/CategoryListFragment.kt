@@ -38,21 +38,31 @@ class CategoryListFragment : Fragment() {
 
         binding = FragmentCategoryListBinding.inflate(inflater, container, false)
 
-        val adapter = CategoryAdapter()
-        binding.rvCategoryList.adapter = adapter
-        subscribeUi(adapter, binding)
-
-        binding.btnAdd.setOnClickListener {
-            Toast.makeText(requireContext(), "TODO: add new category", Toast.LENGTH_LONG).show()
-        }
-
-        (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setHasOptionsMenu(true)
+        setupCategoryList()
+        setupClickListeners()
+        showBackButton()
 
         return binding.root
     }
 
-    private fun subscribeUi(adapter: CategoryAdapter, binding: FragmentCategoryListBinding) {
+    private fun showBackButton() {
+        (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+    }
+
+    private fun setupClickListeners() {
+        binding.btnAdd.setOnClickListener {
+            Toast.makeText(requireContext(), "TODO: add new category", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun setupCategoryList() {
+        val adapter = CategoryAdapter()
+        binding.rvCategoryList.adapter = adapter
+        subscribeUi(adapter)
+    }
+
+    private fun subscribeUi(adapter: CategoryAdapter) {
         viewModel.categoryList.observe(viewLifecycleOwner) { result ->
             adapter.submitList(result)
         }

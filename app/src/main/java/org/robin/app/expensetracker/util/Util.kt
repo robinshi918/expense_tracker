@@ -6,23 +6,25 @@ import java.util.*
 
 /**
  *
+ * Utility methods
+ *
  * @author Robin Shi
  * @since 7/08/21
  */
 class Util {
 
     companion object {
-        private const val TAG = "Util"
-        fun calendar2String(calendar: Calendar): String {
-            return SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
+
+        fun calendar2ddmmyyyyString(calendar: Calendar): String {
+            return SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
         }
 
-        fun calendar2StringWithoutDay(calendar: Calendar): String {
-            return SimpleDateFormat("MM/yyyy").format(calendar.time)
+        fun calendar2myyyString(calendar: Calendar): String {
+            return SimpleDateFormat("MM/yyyy", Locale.ENGLISH).format(calendar.time)
         }
 
         /**
-         * pass a dd/MM/yyyy date string and return a Calendar instance
+         * parse the parameter in format of "dd/MM/yyyy" and return a Calendar instance.
          * return null if parse failed.
          */
         fun ddmmyyyyString2Calendar(str: String): Calendar? {

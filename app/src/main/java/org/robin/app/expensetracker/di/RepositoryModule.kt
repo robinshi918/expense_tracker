@@ -8,6 +8,8 @@ import org.robin.app.expensetracker.data.Repository
 import org.robin.app.expensetracker.data.RepositoryImpl
 
 /**
+ * Module to provide implementation instance of Repository interface.
+ * So Hilt framework knows how to create an Repository instance.
  *
  * @author Robin Shi
  * @since 5/08/21

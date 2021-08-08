@@ -15,8 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:visibility="visible">
-        </NumberPicker>
+            android:visibility="visible"></NumberPicker>
 
         <NumberPicker
             android:id="@+id/picker_month"
@@ -29,8 +28,7 @@
         <NumberPicker
             android:id="@+id/picker_year"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </NumberPicker>
+            android:layout_height="wrap_content"></NumberPicker>
 
     </LinearLayout>
 </LinearLayout>

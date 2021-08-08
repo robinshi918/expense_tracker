@@ -25,6 +25,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/category_list_add_new_category_fab"/>
+        android:contentDescription="@string/category_list_add_new_category_fab" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

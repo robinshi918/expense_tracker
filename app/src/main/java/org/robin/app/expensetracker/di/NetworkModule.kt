@@ -8,6 +8,7 @@ import org.robin.app.expensetracker.api.ExchangeRateService
 import javax.inject.Singleton
 
 /**
+ *  provider module to create singleton of exchange rate service instance.
  *
  * @author Robin Shi
  * @since 5/08/21

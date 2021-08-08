@@ -33,11 +33,20 @@ class TransactionListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTransactionListBinding.inflate(inflater, container, false)
+        setupTransactionList()
+        setupClickListeners()
+        initDate()
+        hideBackButton()
+        return binding.root
+    }
 
+    private fun setupTransactionList() {
         val adapter = TransactionAdapter()
         binding.rvTransactionList.adapter = adapter
         subscribeUi(adapter)
+    }
 
+    private fun setupClickListeners() {
         binding.btnAdd.setOnClickListener {
             navigateToNewTransaction()
         }
@@ -45,14 +54,15 @@ class TransactionListFragment : Fragment() {
         binding.tvDate.setOnClickListener {
             showDatePicker()
         }
+    }
 
+    private fun initDate() {
         // TODO load transactions according to month and year, and show date info in title
-        binding.tvDate.text = Util.calendar2StringWithoutDay(Calendar.getInstance())
+        binding.tvDate.text = Util.calendar2myyyString(Calendar.getInstance())
+    }
 
-        // hide BACK button in action bar
+    private fun hideBackButton() {
         (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
-        return binding.root
     }
 
     private fun subscribeUi(adapter: TransactionAdapter) {
@@ -62,6 +72,7 @@ class TransactionListFragment : Fragment() {
     }
 
     private fun showDatePicker() {
+        // TODO initialise the dialog with the calendar values from top date bar
         MyDatePickerDialog(false).apply {
             setListener { _, year, month, dayOfMonth ->
                 val cal = Calendar.getInstance().apply {
@@ -69,9 +80,9 @@ class TransactionListFragment : Fragment() {
                     set(Calendar.MONTH, month)
                     set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 }
-                binding.tvDate.text = Util.calendar2StringWithoutDay(cal)
+                binding.tvDate.text = Util.calendar2myyyString(cal)
             }
-        }.show(requireFragmentManager(), "MonthYearPickerDialog")
+        }.show(childFragmentManager, "MonthYearPickerDialog")
     }
 
     private fun navigateToNewTransaction() {

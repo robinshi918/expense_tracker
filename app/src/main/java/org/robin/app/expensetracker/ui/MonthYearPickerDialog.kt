@@ -24,6 +24,9 @@ import java.util.*
  */
 class MyDatePickerDialog constructor() : DialogFragment() {
 
+    // TODO bugs and limitations:
+    //    1. year scope is hardcoded to 2000-2099.
+    //    2. every month has 31 days. no automatical range of dayOfMonth according to month and year
     private var hasDayPicker: Boolean = true
     private var year = 1
     private var month = 0
@@ -80,9 +83,9 @@ class MyDatePickerDialog constructor() : DialogFragment() {
 
         if (hasDayPicker) {
             /*
-             TODO() actual number of days in a month varies according to month.
-             Day range needs to update dynamically
-             For now, hardcode the value 1 - 31
+             TODO Actual number of days in a month varies according to month.
+                Day range needs to update dynamically based on month.
+                For now, hardcode the value 1 - 31
              */
             dayPicker.minValue = 1
             dayPicker.maxValue = 31

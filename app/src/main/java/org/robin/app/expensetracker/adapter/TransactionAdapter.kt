@@ -58,12 +58,15 @@ class TransactionAdapter :
             with(binding) {
                 transaction = t
 
+                // expense type: income or expense
                 if (t.expenseType == Transaction.EXPENSE_TYPE_EXPENSE) {
                     ivExpenseType.setImageResource(R.drawable.minus_icon)
                 } else {
                     ivExpenseType.setImageResource(R.drawable.plus_icon)
                 }
 
+                // value of the transaction. exchange rate calculation and cent->dollar calculation
+                // are needed.
                 var displayValue: Float = t.amount.toFloat() / 100
                 if (t.currency == Transaction.CURRENCY_TYPE_USD) {
                     ivOtherCurrency.visibility = View.VISIBLE
@@ -71,10 +74,11 @@ class TransactionAdapter :
                 } else {
                     ivOtherCurrency.visibility = View.GONE
                 }
-
                 tvAmount.text = "%.02f".format(displayValue)
 
-                tvDate.text = Util.calendar2String(t.date)
+                // convert Calendar object to displayable date text
+                tvDate.text = Util.calendar2ddmmyyyyString(t.date)
+
                 executePendingBindings()
             }
         }

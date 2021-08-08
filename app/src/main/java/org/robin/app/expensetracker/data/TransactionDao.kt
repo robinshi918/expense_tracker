@@ -17,9 +17,10 @@ interface TransactionDao {
     @Query("SELECT * FROM `transaction` WHERE transactionId = :id LIMIT 1")
     fun findById(id: Int): Flow<Transaction>
 
-    // TODO to implement
+
     /**
      * find all transactions for a certain month
+     * // TODO to implement findByDate()
      */
     /*@Query("SELECT * FROM `transaction`")
     fun findByDate(month: String): Flow<List<Transaction>>*/

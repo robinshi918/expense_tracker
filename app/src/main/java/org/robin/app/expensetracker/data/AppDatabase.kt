@@ -43,6 +43,9 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * setup callback to populate the category list data as soon as DB is created.
+         */
         private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .addCallback(
