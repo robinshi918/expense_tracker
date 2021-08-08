@@ -39,10 +39,10 @@ class CategoryListFragment : Fragment() {
         binding = FragmentCategoryListBinding.inflate(inflater, container, false)
 
         val adapter = CategoryAdapter()
-        binding.categoryListRecyclerview.adapter = adapter
+        binding.rvCategoryList.adapter = adapter
         subscribeUi(adapter, binding)
 
-        binding.addBtn.setOnClickListener {
+        binding.btnAdd.setOnClickListener {
             Toast.makeText(requireContext(), "TODO: add new category", Toast.LENGTH_LONG).show()
         }
 

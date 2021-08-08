@@ -35,10 +35,10 @@ class TransactionListFragment : Fragment() {
         binding = FragmentTransactionListBinding.inflate(inflater, container, false)
 
         val adapter = TransactionAdapter()
-        binding.transactionList.adapter = adapter
+        binding.rvTransactionList.adapter = adapter
         subscribeUi(adapter)
 
-        binding.addBtn.setOnClickListener {
+        binding.btnAdd.setOnClickListener {
             navigateToNewTransaction()
         }
 
@@ -46,7 +46,7 @@ class TransactionListFragment : Fragment() {
             showDatePicker()
         }
 
-        // TODO load transactions according to month and year
+        // TODO load transactions according to month and year, and show date info in title
         binding.tvDate.text = Util.calendar2StringWithoutDay(Calendar.getInstance())
 
         // hide BACK button in action bar

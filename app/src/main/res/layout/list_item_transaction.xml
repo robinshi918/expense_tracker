@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
@@ -26,7 +25,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/expense_type"
+                android:id="@+id/iv_expense_type"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:onClick="@{clickListener}"
@@ -44,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/expense_type"
+                app:layout_constraintStart_toEndOf="@+id/iv_expense_type"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -65,7 +64,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <TextView
-                android:id="@+id/amount"
+                android:id="@+id/tv_amount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="end"
@@ -75,13 +74,13 @@
                 android:singleLine="true"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/currency"
+                app:layout_constraintEnd_toStartOf="@+id/tv_currency"
                 app:layout_constraintStart_toEndOf="@+id/left_container"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="100.00" />
 
             <TextView
-                android:id="@+id/currency"
+                android:id="@+id/tv_currency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -94,7 +93,7 @@
                 tools:text="NZD" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageview_other_currency"
+                android:id="@+id/iv_other_currency"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginTop="4dp"

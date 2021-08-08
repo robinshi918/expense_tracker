@@ -182,7 +182,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/category_next_image"
+                        android:id="@+id/iv_category_next"
                         android:layout_width="@dimen/transaction_detail_next_icon_size"
                         android:layout_height="@dimen/transaction_detail_next_icon_size"
                         android:layout_marginStart="@dimen/transaction_detail_next_icon_margin_start"
@@ -198,7 +198,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/transaction_detail_value_text_size"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/category_next_image"
+                        app:layout_constraintEnd_toStartOf="@+id/iv_category_next"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Entertainment" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -231,7 +231,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/date_next_image"
+                        android:id="@+id/iv_date_next"
                         android:layout_width="@dimen/transaction_detail_next_icon_size"
                         android:layout_height="@dimen/transaction_detail_next_icon_size"
                         android:layout_marginStart="@dimen/transaction_detail_next_icon_margin_start"
@@ -247,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/transaction_detail_value_text_size"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/date_next_image"
+                        app:layout_constraintEnd_toStartOf="@+id/iv_date_next"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="15/08/2021" />
 
@@ -271,7 +271,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/save_btn"
+            android:id="@+id/btn_save"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -279,7 +279,7 @@
             android:src="@drawable/save_icon" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/delete_btn"
+            android:id="@+id/btn_delete"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

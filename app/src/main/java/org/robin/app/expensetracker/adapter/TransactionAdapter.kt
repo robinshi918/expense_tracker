@@ -59,20 +59,20 @@ class TransactionAdapter :
                 transaction = t
 
                 if (t.expenseType == Transaction.EXPENSE_TYPE_EXPENSE) {
-                    expenseType.setImageResource(R.drawable.minus_icon)
+                    ivExpenseType.setImageResource(R.drawable.minus_icon)
                 } else {
-                    expenseType.setImageResource(R.drawable.plus_icon)
+                    ivExpenseType.setImageResource(R.drawable.plus_icon)
                 }
 
                 var displayValue: Float = t.amount.toFloat() / 100
                 if (t.currency == Transaction.CURRENCY_TYPE_USD) {
-                    imageviewOtherCurrency.visibility = View.VISIBLE
+                    ivOtherCurrency.visibility = View.VISIBLE
                     displayValue *= t.exchangeRate
                 } else {
-                    imageviewOtherCurrency.visibility = View.GONE
-
+                    ivOtherCurrency.visibility = View.GONE
                 }
-                amount.text = "%.02f".format(displayValue)
+
+                tvAmount.text = "%.02f".format(displayValue)
 
                 tvDate.text = Util.calendar2String(t.date)
                 executePendingBindings()

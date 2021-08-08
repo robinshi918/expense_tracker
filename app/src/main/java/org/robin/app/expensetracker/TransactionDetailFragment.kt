@@ -122,7 +122,7 @@ class TransactionDetailFragment : Fragment() {
             tvDate.text = Util.calendar2String(t.date)
             transaction = t
 
-            deleteBtn.visibility = if (transactionId == INVALID_TRANSACTION_ID)
+            btnDelete.visibility = if (transactionId == INVALID_TRANSACTION_ID)
                 View.GONE else View.VISIBLE
         }
     }
@@ -146,7 +146,7 @@ class TransactionDetailFragment : Fragment() {
                 }
             }
 
-            saveBtn.setOnClickListener {
+            btnSave.setOnClickListener {
                 with(transaction) {
                     val valueString = edittextAmount.text.toString()
                     amount = if (valueString.isNotEmpty()) {
@@ -170,7 +170,7 @@ class TransactionDetailFragment : Fragment() {
                 }
             }
 
-            deleteBtn.setOnClickListener {
+            btnDelete.setOnClickListener {
                 AlertDialog.Builder(requireContext())
                     .setTitle(getString(R.string.delete_transaction_dialog_title))
                     .setMessage(getString(R.string.delete_transaction_dialog_body))
@@ -192,7 +192,6 @@ class TransactionDetailFragment : Fragment() {
             }
 
             dateContainer.setOnClickListener {
-
 
                 val currentDateString = tvDate.text
                 val cal = Util.ddmmyyyyString2Calendar(currentDateString.toString())!!
