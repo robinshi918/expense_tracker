@@ -8,11 +8,22 @@
     <dimen name="transaction_detail_start_padding">15dp</dimen>
     <dimen name="transaction_detail_end_padding">15dp</dimen>
     <dimen name="transaction_detail_row_height">80dp</dimen>
-    <dimen name="transaction_detail_title_text_size">25sp</dimen>
     <dimen name="transaction_detail_row_padding_top">10dp</dimen>
     <dimen name="transaction_detail_row_padding_bottom">10dp</dimen>
     <dimen name="transaction_detail_divider_height">1dp</dimen>
     <dimen name="transaction_detail_fab_margin_between">40dp</dimen>
+    <dimen name="transaction_detail_next_icon_size">45dp</dimen>
+    <dimen name="transaction_detail_next_icon_margin_start">10dp</dimen>
+    <dimen name="transaction_detail_next_icon_margin_end">5dp</dimen>
+
+    <dimen name="transaction_detail_title_text_size">25sp</dimen>
+    <dimen name="transaction_detail_value_text_size">20sp</dimen>
+    <dimen name="transaction_detail_exchange_rate_text_size">14sp</dimen>
+
+
+    <!--transaction list fragment-->
+    <dimen name="transaction_list_date_text_size">20sp</dimen>
+
 
 
 

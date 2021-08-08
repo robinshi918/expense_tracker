@@ -18,5 +18,12 @@
     <string name="error_please_select_category">Please select a category.</string>
     <string name="loading_exchange_rate">Loading Exchange Rate...</string>
     <string name="loading_exchange_rate_failure">Loading Exchange Rate failed...</string>
+    <string name="transaction_detail_delete_transaction_fab">Delete Dransaction</string>
+    <string name="transaction_detail_save_transaction_fab">Save Transaction</string>
+
+
+    <string name="transaction_list_add_new_transaction_fab">Add New Transaction</string>
+    <string name="category_list_add_new_category_fab">Add New Category</string>
+    <string name="currency_nzd">NZD</string>
 
 </resources>

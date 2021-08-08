@@ -11,15 +11,15 @@
         android:layout_height="40dp"
         android:background="@android:color/darker_gray"
         android:gravity="center"
-        android:minHeight="20dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        tools:text="Aug 2021"
-        android:textSize="20sp"
+        tools:text="08/2021"
+        android:textSize="@dimen/transaction_list_date_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:focusable="true"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transaction_list"
@@ -41,9 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/fab_bottom_margin"
         android:src="@drawable/add_icon"
-        android:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/transaction_list_add_new_transaction_fab"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -94,6 +94,7 @@ class TransactionDetailFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    // set up listener to be able to receive argument from CategoryListFragment
     private fun acceptCategorySelectionResult() {
         setFragmentResultListener(REQUEST_KEY) { key, bundle ->
             val categoryName = bundle.getString(CategoryListFragment.CATEGORY_ARGUMENT_KEY, "")
@@ -106,7 +107,9 @@ class TransactionDetailFragment : Fragment() {
 
     private fun initUI(t: Transaction) {
         with(binding) {
-            edittextAmount.setText("%.02f".format((t.amount.toFloat() / 100)))
+            if (t.amount > 0) {
+                edittextAmount.setText("%.02f".format((t.amount.toFloat() / 100)))
+            }
             tvCategory.text = t.categoryName
 
             switchExpenseType.isChecked = true
@@ -145,7 +148,13 @@ class TransactionDetailFragment : Fragment() {
 
             saveBtn.setOnClickListener {
                 with(transaction) {
-                    amount = (edittextAmount.text.toString().toFloat() * 100).toInt()
+                    val valueString = edittextAmount.text.toString()
+                    amount = if (valueString.isNotEmpty()) {
+                        (valueString.toFloat() * 100).toInt()
+                    } else {
+                        0
+                    }
+
                     currency =
                         if (switchCurrency.isChecked) Transaction.CURRENCY_TYPE_NZD else Transaction.CURRENCY_TYPE_USD
                     expenseType = if (switchExpenseType.isChecked)
