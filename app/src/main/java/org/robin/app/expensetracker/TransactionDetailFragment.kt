@@ -63,15 +63,17 @@ class TransactionDetailFragment : Fragment() {
 
         setupClickListeners()
 
-        setFragmentResultListener(REQUEST_KEY) { key, bundle ->
-            val categoryName = bundle.getString(CategoryListFragment.CATEGORY_ARGUMENT_KEY, "")
-            Log.d(TAG, "key = $key, bundle size = ${bundle.size()}, categoryName = $categoryName")
-            transaction.categoryName = categoryName
-            binding.tvCategory.text = categoryName
-        }
+        acceptCategorySelectionResult()
 
+        fillUiWithData()
+
+        enableBackButton()
+
+        return binding.root
+    }
+
+    private fun fillUiWithData() {
         transactionId = safeArgs.transactionId
-
         if (transactionId != INVALID_TRANSACTION_ID) {
             // init widget values with data from database
             viewModel.transaction.observe(viewLifecycleOwner) { t: Transaction ->
@@ -84,12 +86,21 @@ class TransactionDetailFragment : Fragment() {
             initUI(this.transaction)
             getExchangeRate()
         }
+    }
 
+    private fun enableBackButton() {
         // enable back button
         (requireActivity() as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
+    }
 
-        return binding.root
+    private fun acceptCategorySelectionResult() {
+        setFragmentResultListener(REQUEST_KEY) { key, bundle ->
+            val categoryName = bundle.getString(CategoryListFragment.CATEGORY_ARGUMENT_KEY, "")
+            Log.d(TAG, "key = $key, bundle size = ${bundle.size()}, categoryName = $categoryName")
+            transaction.categoryName = categoryName
+            binding.tvCategory.text = categoryName
+        }
     }
 
 
@@ -173,16 +184,18 @@ class TransactionDetailFragment : Fragment() {
 
             dateContainer.setOnClickListener {
 
-                val datePickerDialog: MyDatePickerDialog =
-                    if (transactionId == INVALID_TRANSACTION_ID) {
-                        MyDatePickerDialog()
-                    } else {
-                        val year = transaction.date[Calendar.YEAR]
-                        val month = transaction.date[Calendar.MONTH]
-                        val day = transaction.date[Calendar.DAY_OF_MONTH]
-                        MyDatePickerDialog(true, year, month, day)
-                    }
+
+                val currentDateString = tvDate.text
+                val cal = Util.ddmmyyyyString2Calendar(currentDateString.toString())!!
+                val datePickerDialog = MyDatePickerDialog(
+                    hasDayPicker = true,
+                    year = cal[Calendar.YEAR],
+                    month = cal[Calendar.MONTH],
+                    day = cal[Calendar.DAY_OF_MONTH]
+                )
+
                 datePickerDialog.setListener { _, year, month, dayOfMonth ->
+
                     val calendar = Calendar.getInstance()
                     calendar.set(year, month, dayOfMonth)
                     with(transaction) {
@@ -194,23 +207,28 @@ class TransactionDetailFragment : Fragment() {
                         getExchangeRate()
                     }
                 }
-                datePickerDialog.show(requireFragmentManager(), "MonthYearPickerDialog")
+                datePickerDialog.show(requireFragmentManager(), "DayMonthYearPickerDialog")
             }
         }
     }
 
+    /**
+     * observe exchange rate query results. Whenever it arrives, set the value
+     * into transaction and update UI.
+     */
     private val currencyRateObserver: Observer<ExchangeRate> =
         Observer<ExchangeRate> { rate ->
             rate?.let {
                 isExchangeRateLoading = false
-                Log.e("Robin", "rate returned from livedata: ${rate.rate}")
+                Log.d(TAG, "exchange rate result returned: ${rate.rate}")
                 binding.tvCurrencyRate.text = "1 USD = ${rate.rate} NZD"
                 transaction.exchangeRate = rate.rate
             }
         }
 
-    // TODO Refactor needed. Below logic handles the web API call failures as a workaround.
-    // Repository layer should handle such logic, rather than UI layer.
+    // TODO Refactor needed. Below logic should be moved to Repository layout.
+    //   The code below handles the web API call failures as a workaround.
+    //   Repository layer should handle such logic, rather than UI layer.
     private val LOAD_EXCHANGE_RATE_TIMEOUT = 7000L  // in milliseconds
     private var isExchangeRateLoading = false
     private fun getExchangeRate() {
