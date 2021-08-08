@@ -45,7 +45,7 @@ class TransactionDetailViewModel @Inject internal constructor(
         // TODO move hardcoded string to string resource
         if (transaction.amount <= 0) {
             throw IllegalArgumentException("Transaction value can not be zero.")
-        } else if (transaction.categoryId == -1) {
+        } else if (transaction.categoryName.isNullOrEmpty()) {
             throw IllegalArgumentException("Please select a category.")
         }
     }

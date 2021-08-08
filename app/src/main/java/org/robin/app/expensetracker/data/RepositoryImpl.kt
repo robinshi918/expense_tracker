@@ -18,6 +18,10 @@ class RepositoryImpl @Inject constructor(
     private val exchangeRateService: ExchangeRateService
 ) : Repository {
 
+    companion object {
+        private const val TAG = "RepositoryImpl"
+    }
+
     override fun getCategoryList(): Flow<List<Category>> =
         appDatabase.categoryDao().getAllCategory()
 
@@ -50,10 +54,13 @@ class RepositoryImpl @Inject constructor(
         Log.e("Robin", "number of exchange rate for $date = $numOfRate")
         if (numOfRate == 0) {
             val response = exchangeRateService.getRate(date)
-            Log.e("Robin", "network query result = $response")
+            Log.d(TAG, "network query result = $response")
             if (response.success) {
                 val rate = ExchangeRate(date, response.getRate(target)!!, source, target)
                 appDatabase.exchangeRateDao().insert(rate)
+            } else {
+                //TODO handle if Web API query fails
+                Log.e(TAG, "Web query failed. ")
             }
         }
     }

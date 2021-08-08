@@ -14,7 +14,7 @@ import java.util.*
  * API 1: get full list of live exchange rates
  *  - http://api.currencylayer.com/live?access_key=08ae8c2209048c3e15396204ae30e2cc&format=1
  * API 2: get historical exchange rate for some currencies
- *  - http://api.currencylayer.com/historical?date=2021-09-01&currencies=USD,NZD&access_key=08ae8c2209048c3e15396204ae30e2cc&format=1
+ *  - http://api.currencylayer.com/historical?date=2021-09-01&currencies=NZD&access_key=08ae8c2209048c3e15396204ae30e2cc&format=1
  *
  * @author Robin Shi
  * @since 6/08/21

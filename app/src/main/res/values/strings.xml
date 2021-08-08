@@ -16,5 +16,7 @@
     <string name="title_date">Date</string>
     <string name="error_amount_is_zero">Transaction value can not be zero.</string>
     <string name="error_please_select_category">Please select a category.</string>
+    <string name="loading_exchange_rate">Loading Exchange Rate...</string>
+    <string name="loading_exchange_rate_failure">Loading Exchange Rate failed...</string>
 
 </resources>

@@ -2,6 +2,8 @@ package org.robin.app.expensetracker
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -10,12 +12,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import org.robin.app.expensetracker.CategoryListFragment.Companion.REQUEST_KEY
 import org.robin.app.expensetracker.data.ExchangeRate
 import org.robin.app.expensetracker.data.Transaction
 import org.robin.app.expensetracker.databinding.FragmentTransactionDetailBinding
@@ -34,6 +38,8 @@ import java.util.*
 class TransactionDetailFragment : Fragment() {
 
     companion object {
+        private const val TAG = "TransactionListFragment"
+
         // fragment argument 'transactionId' is -1 if user wants to create a new transaction
         const val INVALID_TRANSACTION_ID = -1
     }
@@ -43,7 +49,7 @@ class TransactionDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentTransactionDetailBinding
 
-    private lateinit var transaction: Transaction
+    private var transaction: Transaction = Transaction()
     private var transactionId: Int = INVALID_TRANSACTION_ID
 
     @SuppressLint("SetTextI18n")
@@ -57,6 +63,13 @@ class TransactionDetailFragment : Fragment() {
 
         setupClickListeners()
 
+        setFragmentResultListener(REQUEST_KEY) { key, bundle ->
+            val categoryName = bundle.getString(CategoryListFragment.CATEGORY_ARGUMENT_KEY, "")
+            Log.d(TAG, "key = $key, bundle size = ${bundle.size()}, categoryName = $categoryName")
+            transaction.categoryName = categoryName
+            binding.tvCategory.text = categoryName
+        }
+
         transactionId = safeArgs.transactionId
 
         if (transactionId != INVALID_TRANSACTION_ID) {
@@ -64,17 +77,12 @@ class TransactionDetailFragment : Fragment() {
             viewModel.transaction.observe(viewLifecycleOwner) { t: Transaction ->
                 initUI(t)
                 transaction = t
-
-                viewModel.getExchangeRate(transaction.date).asLiveData()
-                    .observe(viewLifecycleOwner, currencyRateObserver)
+                getExchangeRate()
             }
         } else {
             // init widget with empty values
-            transaction = Transaction().also { transaction ->
-                initUI(transaction)
-            }
-            viewModel.getExchangeRate(transaction.date).asLiveData()
-                .observe(viewLifecycleOwner, currencyRateObserver)
+            initUI(this.transaction)
+            getExchangeRate()
         }
 
         // enable back button
@@ -84,14 +92,6 @@ class TransactionDetailFragment : Fragment() {
         return binding.root
     }
 
-    private val currencyRateObserver: Observer<ExchangeRate> =
-        Observer<ExchangeRate> { rate ->
-            rate?.let {
-                Log.e("Robin", "rate returned from livedata: ${rate.rate}")
-                binding.tvCurrencyRate.text = "1 USD = ${rate.rate} NZD"
-                transaction.exchangeRate = rate.rate
-            }
-        }
 
     private fun initUI(t: Transaction) {
         with(binding) {
@@ -114,6 +114,7 @@ class TransactionDetailFragment : Fragment() {
     }
 
     private fun setupClickListeners() {
+
         with(binding) {
 
             categoryContainer.setOnClickListener {
@@ -138,10 +139,10 @@ class TransactionDetailFragment : Fragment() {
                         if (switchCurrency.isChecked) Transaction.CURRENCY_TYPE_NZD else Transaction.CURRENCY_TYPE_USD
                     expenseType = if (switchExpenseType.isChecked)
                         Transaction.EXPENSE_TYPE_EXPENSE else Transaction.EXPENSE_TYPE_INCOME
-                    categoryId = 0            //TODO get real category ID
-                    categoryName = "Unknown"   //TODO get real category name
+                    categoryName = tvCategory.text.toString()
                 }
                 try {
+                    // TODO handle save failure scenario, in asynchronous way
                     viewModel.save(transaction)
                     findNavController().navigateUp()
                 } catch (e: IllegalArgumentException) {
@@ -155,9 +156,8 @@ class TransactionDetailFragment : Fragment() {
                     .setMessage(getString(R.string.delete_transaction_dialog_body))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(R.string.ok) { _, _ ->
-
+                        // TODO handle delete failure scenario, in asynchronous way
                         viewModel.delete()
-
                         findNavController().navigateUp()
                     }
                     .setNegativeButton(R.string.cancel, null).show()
@@ -191,14 +191,39 @@ class TransactionDetailFragment : Fragment() {
                         date[Calendar.DAY_OF_MONTH] = calendar[Calendar.DAY_OF_MONTH]
                         tvDate.text = Util.calendar2String(date)
 
-                        viewModel.getExchangeRate(date).asLiveData()
-                            .observe(viewLifecycleOwner, currencyRateObserver)
-
+                        getExchangeRate()
                     }
                 }
                 datePickerDialog.show(requireFragmentManager(), "MonthYearPickerDialog")
             }
         }
+    }
+
+    private val currencyRateObserver: Observer<ExchangeRate> =
+        Observer<ExchangeRate> { rate ->
+            rate?.let {
+                isExchangeRateLoading = false
+                Log.e("Robin", "rate returned from livedata: ${rate.rate}")
+                binding.tvCurrencyRate.text = "1 USD = ${rate.rate} NZD"
+                transaction.exchangeRate = rate.rate
+            }
+        }
+
+    // TODO Refactor needed. Below logic handles the web API call failures as a workaround.
+    // Repository layer should handle such logic, rather than UI layer.
+    private val LOAD_EXCHANGE_RATE_TIMEOUT = 7000L  // in milliseconds
+    private var isExchangeRateLoading = false
+    private fun getExchangeRate() {
+        viewModel.getExchangeRate(transaction.date)
+            .asLiveData(timeoutInMs = LOAD_EXCHANGE_RATE_TIMEOUT)
+            .observe(viewLifecycleOwner, currencyRateObserver)
+        binding.tvCurrencyRate.text = getString(R.string.loading_exchange_rate)
+        isExchangeRateLoading = true
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (isExchangeRateLoading) {
+                binding.tvCurrencyRate.text = getString(R.string.loading_exchange_rate_failure)
+            }
+        }, LOAD_EXCHANGE_RATE_TIMEOUT)
     }
 
     /**
