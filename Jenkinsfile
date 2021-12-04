@@ -4,6 +4,9 @@ pipeline {
   //   // Run on a build agent where we have the Android SDK installed
   //   label any
   // }
+  environment {
+    ANDROID_SDK_ROOT = '/Users/robinshi/Library/Android/sdk'
+  }
   options {
     // Stop the build early in case of compile or test failures
     skipStagesAfterUnstable()
