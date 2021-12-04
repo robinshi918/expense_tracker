@@ -1,8 +1,9 @@
 pipeline {
-  agent {
-    // Run on a build agent where we have the Android SDK installed
-    label any
-  }
+  agent any
+  // {
+  //   // Run on a build agent where we have the Android SDK installed
+  //   label any
+  // }
   options {
     // Stop the build early in case of compile or test failures
     skipStagesAfterUnstable()
