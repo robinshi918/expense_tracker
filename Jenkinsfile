@@ -66,7 +66,7 @@ pipeline {
               cp -fr ${WEBRTC_LIB_UNZIPPED}/webrtc app/src/main/jni/megachat/
 
               mkdir -p app/src
-              cp -fr ${GOOGLE_MAP_API_UNZIPPED}
+              cp -fr ${GOOGLE_MAP_API_UNZIPPED} app/src
 
 
               """
