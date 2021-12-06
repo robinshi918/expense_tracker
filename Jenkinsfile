@@ -22,6 +22,7 @@ pipeline {
     stage('Download Dependency Lib') {
             steps {
               sh '''
+              echo ${BUILD_LIB_DOWNLOAD_FOLDER}
               export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
               mkdir -p ${BUILD_LIB_DOWNLOAD_FOLDER}
               cd {$BUILD_LIB_DOWNLOAD_FOLDER}
