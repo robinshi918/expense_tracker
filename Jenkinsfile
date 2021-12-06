@@ -10,8 +10,11 @@ pipeline {
     BUILD_LIB_DOWNLOAD_FOLDER = '${WORKSPACE}/mega_build_download'
     WEBRTC_LIB_URL = "https://mega.nz/file/t81HSYJI#KQNzSEqmGVSXfwmQx2HMJy3Jo2AcDfYm4oiMP_CFW6s"
     WEBRTC_LIB_FILE = 'WebRTC_NDKr16b_m76_p21.zip'
+    WEBRTC_LIB_UNZIPPED = 'webrtc_unzipped'
     GOOGLE_MAP_API_URL = "https://mega.nz/#!1tcl3CrL!i23zkmx7ibnYy34HQdsOOFAPOqQuTo1-2iZ5qFlU7-k"
     GOOGLE_MAP_API_FILE = 'default_google_maps_api.zip'
+    GOOGLE_MAP_API_UNZIPPED = 'default_google_map_api_unzipped'
+
   }
   options {
     // Stop the build early in case of compile or test failures
@@ -38,10 +41,10 @@ pipeline {
                 echo "downloading webrtc"
                 mega-get ${WEBRTC_LIB_URL}
               fi
-              if [ -d "webrtc_unzipped" ]; then
+              if [ -d "${WEBRTC_LIB_UNZIPPED}" ]; then
                 echo "webrtc already unzipped"
               else
-                unzip ${WEBRTC_LIB_FILE} -d webrtc_unzipped
+                unzip ${WEBRTC_LIB_FILE} -d ${WEBRTC_LIB_UNZIPPED}
               fi
 
               if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_FILE}"; then
@@ -50,13 +53,22 @@ pipeline {
                 echo "downloading google map api"
                 mega-get ${GOOGLE_MAP_API_URL}
               fi
-              if [ -d "default_google_map_api_unzipped" ]; then
+              if [ -d "${GOOGLE_MAP_API_UNZIPPED}" ]; then
                 echo "default_google_map_api already unzipped"
               else
-                unzip ${GOOGLE_MAP_API_FILE} -d default_google_map_api_unzipped
+                unzip ${GOOGLE_MAP_API_FILE} -d ${GOOGLE_MAP_API_UNZIPPED}
               fi
 
               ls -lh
+
+              # apply dependency patch
+              mkdir -p app/src/main/jni/megachat
+              cp -fr ${WEBRTC_LIB_UNZIPPED}/webrtc app/src/main/jni/megachat/
+
+              mkdir -p app/src
+              cp -fr ${GOOGLE_MAP_API_UNZIPPED}
+
+
               """
             }
           }
