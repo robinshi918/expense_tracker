@@ -25,6 +25,7 @@ pipeline {
               export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
               mkdir -p ${BUILD_LIB_DOWNLOAD_FOLDER}
               cd {$BUILD_LIB_DOWNLOAD_FOLDER}
+              pwd
               ls -lh
 
               if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${WEBRTC_LIB_FILE}"; then
