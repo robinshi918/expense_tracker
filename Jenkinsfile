@@ -22,10 +22,10 @@ pipeline {
     stage('Download Dependency Lib') {
             steps {
               sh """
-              #echo "The build number is ${env.BUILD_NUMBER}"
+              echo "The build number is ${BUILD_NUMBER}"
               echo "You can also use \${BUILD_NUMBER} -> ${BUILD_NUMBER}"
               echo ${BUILD_LIB_DOWNLOAD_FOLDER}
-              echo "${env.WORKSPACE}"
+              echo "${WORKSPACE}"
               echo "${WORKSPACE}"
               export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
               mkdir -p "${BUILD_LIB_DOWNLOAD_FOLDER}"
