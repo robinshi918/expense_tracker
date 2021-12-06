@@ -7,7 +7,7 @@ pipeline {
   environment {
     ANDROID_SDK_ROOT = '/Users/robinshi/Library/Android/sdk'
 
-    BUILD_LIB_DOWNLOAD_FOLDER = '${WORKSPACE}/mega_build_download/'
+    BUILD_LIB_DOWNLOAD_FOLDER = '${env.WORKSPACE}/mega_build_download'
     WEBRTC_LIB_URL = "https://mega.nz/#!1tcl3CrL!i23zkmx7ibnYy34HQdsOOFAPOqQuTo1-2iZ5qFlU7-k"
     WEBRTC_LIB_FILE = 'WebRTC_NDKr16b_m76_p21.zip'
     GOOGLE_MAP_API_URL = "https://mega.nz/#!1tcl3CrL!i23zkmx7ibnYy34HQdsOOFAPOqQuTo1-2iZ5qFlU7-k"
