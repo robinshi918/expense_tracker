@@ -7,7 +7,7 @@ pipeline {
   environment {
     ANDROID_SDK_ROOT = '/Users/robinshi/Library/Android/sdk'
 
-    BUILD_LIB_DOWNLOAD_FOLDER = '$WORKSPACE/mega_build_download/'
+    BUILD_LIB_DOWNLOAD_FOLDER = '${WORKSPACE}/mega_build_download/'
     WEBRTC_LIB_URL = "https://mega.nz/#!1tcl3CrL!i23zkmx7ibnYy34HQdsOOFAPOqQuTo1-2iZ5qFlU7-k"
     WEBRTC_LIB_FILE = 'WebRTC_NDKr16b_m76_p21.zip'
     GOOGLE_MAP_API_URL = "https://mega.nz/#!1tcl3CrL!i23zkmx7ibnYy34HQdsOOFAPOqQuTo1-2iZ5qFlU7-k"
@@ -23,24 +23,24 @@ pipeline {
             steps {
               sh '''
               export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
-              mkdir -p $BUILD_LIB_DOWNLOAD_FOLDER
-              cd $BUILD_LIB_DOWNLOAD_FOLDER
+              mkdir -p ${BUILD_LIB_DOWNLOAD_FOLDER}
+              cd {$BUILD_LIB_DOWNLOAD_FOLDER}
               ls -lh
 
-              if test -f "$BUILD_LIB_DOWNLOAD_FOLDER/$WEBRTC_LIB_FILE"; then
+              if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${WEBRTC_LIB_FILE}"; then
                 echo "downloading webrtc"
-                echo mega-get $WEBRTC_LIB_URL
-                mega-get $WEBRTC_LIB_URL
+                echo mega-get ${WEBRTC_LIB_URL}
+                mega-get {$WEBRTC_LIB_URL}
               else
-                echo "$WEBRTC_LIB_FILE already downloaded. Skip downloading."
+                echo "{$WEBRTC_LIB_FILE} already downloaded. Skip downloading."
               fi
 
-              if test -f "$BUILD_LIB_DOWNLOAD_FOLDER/GOOGLE_MAP_API_FILE"; then
+              if test -f "{$BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_FILE}"; then
                 echo "downloading google map api"
-                echo mega-get $GOOGLE_MAP_API_URL
-                mega-get $GOOGLE_MAP_API_URL
+                echo mega-get {$GOOGLE_MAP_API_URL}
+                mega-get {$GOOGLE_MAP_API_URL}
               else
-                echo "GOOGLE_MAP_API_FILE already downloaded. Skip downloading."
+                echo "${GOOGLE_MAP_API_FILE} already downloaded. Skip downloading."
               fi
 
               ls -lh
