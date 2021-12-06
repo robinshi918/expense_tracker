@@ -23,6 +23,8 @@ pipeline {
             steps {
               sh '''
               echo ${BUILD_LIB_DOWNLOAD_FOLDER}
+              echo ${env.WORKSPACE}
+              echo ${WORKSPACE}
               export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
               mkdir -p ${BUILD_LIB_DOWNLOAD_FOLDER}
               cd {$BUILD_LIB_DOWNLOAD_FOLDER}
