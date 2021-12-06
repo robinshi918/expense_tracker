@@ -21,8 +21,8 @@ pipeline {
 
     stage('Download Dependency Lib') {
             steps {
-              sh '''
-              echo "The build number is ${env.BUILD_NUMBER}"
+              sh """
+              #echo "The build number is ${env.BUILD_NUMBER}"
               echo "You can also use \${BUILD_NUMBER} -> ${BUILD_NUMBER}"
               echo ${BUILD_LIB_DOWNLOAD_FOLDER}
               echo ${env.WORKSPACE}
@@ -50,7 +50,7 @@ pipeline {
               fi
 
               ls -lh
-              '''
+              """
             }
           }
     stage('Compile') {
