@@ -33,19 +33,17 @@ pipeline {
               ls -lh
 
               if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${WEBRTC_LIB_FILE}"; then
-                echo "downloading webrtc"
-                echo mega-get ${WEBRTC_LIB_URL}
-                mega-get {$WEBRTC_LIB_URL}
+                echo "${WEBRTC_LIB_FILE} already downloaded. Skip downloading."
               else
-                echo "{$WEBRTC_LIB_FILE} already downloaded. Skip downloading."
+                echo "downloading webrtc"
+                mega-get ${WEBRTC_LIB_URL}
               fi
 
-              if test -f "{$BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_FILE}"; then
-                echo "downloading google map api"
-                echo mega-get {$GOOGLE_MAP_API_URL}
-                mega-get {$GOOGLE_MAP_API_URL}
-              else
+              if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_FILE}"; then
                 echo "${GOOGLE_MAP_API_FILE} already downloaded. Skip downloading."
+              else
+                echo "downloading google map api"
+                mega-get ${GOOGLE_MAP_API_URL}
               fi
 
               ls -lh
