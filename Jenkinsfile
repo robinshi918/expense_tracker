@@ -61,12 +61,14 @@ pipeline {
 
               ls -lh
 
+              cd ${WORKSPACE}
+              pwd
               # apply dependency patch
               mkdir -p app/src/main/jni/megachat
-              cp -fr ${WEBRTC_LIB_UNZIPPED}/webrtc app/src/main/jni/megachat/
+              cp -fr ${BUILD_LIB_DOWNLOAD_FOLDER}/${WEBRTC_LIB_UNZIPPED}/webrtc app/src/main/jni/megachat/
 
               mkdir -p app/src
-              cp -fr ${GOOGLE_MAP_API_UNZIPPED} app/src
+              cp -fr ${BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_UNZIPPED} app/src
 
 
               """
