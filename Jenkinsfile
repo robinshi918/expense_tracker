@@ -6,12 +6,34 @@ pipeline {
   // }
   environment {
     ANDROID_SDK_ROOT = '/Users/robinshi/Library/Android/sdk'
+
+    BUILD_LIB_DOWNLOAD_FOLDER = '$WORKSPACE/mega_build_download/'
+    WEBRTC_LIB_URL = "https://mega.nz/#\!1tcl3CrL!i23zkmx7ibnYy34HQdsOOFAPOqQuTo1-2iZ5qFlU7-k"
+    WEBRTC_LIB_FILE = 'WebRTC_NDKr16b_m76_p21.zip'
+    GOOGLE_MAP_API_URL = 'https://mega.nz/#\!1tcl3CrL\!i23zkmx7ibnYy34HQdsOOFAPOqQuTo1-2iZ5qFlU7-k'
+    GOOGLE_MAP_API_FILE = 'default_google_maps_api.zip'
   }
   options {
     // Stop the build early in case of compile or test failures
     skipStagesAfterUnstable()
   }
   stages {
+
+    stage('Download Dependency Lib') {
+            steps {
+              sh '''
+              export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
+              mkdir -p $BUILD_LIB_DOWNLOAD_FOLDER
+              cd $BUILD_LIB_DOWNLOAD_FOLDER
+              ls -lh
+              echo "download webrtc"
+              mega-get $WEBRTC_LIB_URL
+              echo "downloading google map api"
+              mega-get $GOOGLE_MAP_API_URL
+              ls -lh
+              '''
+            }
+          }
     stage('Compile') {
       steps {
         // Compile the app and its dependencies
