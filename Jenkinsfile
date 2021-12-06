@@ -19,13 +19,13 @@ pipeline {
   }
   stages {
 
-    stage('Download Dependency Lib') {
+    stage('Download Dependency Lib for SDK') {
             steps {
               sh """
-              echo "The build number is ${BUILD_NUMBER}"
-              echo "You can also use \${BUILD_NUMBER} -> ${BUILD_NUMBER}"
-              echo ${BUILD_LIB_DOWNLOAD_FOLDER}
-              echo "${WORKSPACE}"
+              # echo "The build number is ${BUILD_NUMBER}"
+              # echo "You can also use \${BUILD_NUMBER} -> ${BUILD_NUMBER}"
+              # echo ${BUILD_LIB_DOWNLOAD_FOLDER}
+              # echo "${WORKSPACE}"
               export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
               mkdir -p "${BUILD_LIB_DOWNLOAD_FOLDER}"
               cd "${BUILD_LIB_DOWNLOAD_FOLDER}"
@@ -38,12 +38,22 @@ pipeline {
                 echo "downloading webrtc"
                 mega-get ${WEBRTC_LIB_URL}
               fi
+              if [ -d "webrtc_unzipped" ]; then
+                echo "webrtc already unzipped"
+              else
+                unzip ${WEBRTC_LIB_FILE} -d webrtc_unzipped
+              fi
 
               if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_FILE}"; then
                 echo "${GOOGLE_MAP_API_FILE} already downloaded. Skip downloading."
               else
                 echo "downloading google map api"
                 mega-get ${GOOGLE_MAP_API_URL}
+              fi
+              if [ -d "default_google_map_api_unzipped" ]; then
+                echo "default_google_map_api already unzipped"
+              else
+                unzip ${GOOGLE_MAP_API_FILE} -d default_google_map_api_unzipped
               fi
 
               ls -lh
