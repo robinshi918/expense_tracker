@@ -25,10 +25,6 @@ pipeline {
     stage('Download Dependency Lib for SDK') {
             steps {
               sh """
-              # echo "The build number is ${BUILD_NUMBER}"
-              # echo "You can also use \${BUILD_NUMBER} -> ${BUILD_NUMBER}"
-              # echo ${BUILD_LIB_DOWNLOAD_FOLDER}
-              # echo "${WORKSPACE}"
               export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
               mkdir -p "${BUILD_LIB_DOWNLOAD_FOLDER}"
               cd "${BUILD_LIB_DOWNLOAD_FOLDER}"
@@ -64,16 +60,24 @@ pipeline {
               cd ${WORKSPACE}
               pwd
               # apply dependency patch
-              mkdir -p app/src/main/jni/megachat
+              # mkdir -p app/src/main/jni/megachat
               cp -fr ${BUILD_LIB_DOWNLOAD_FOLDER}/${WEBRTC_LIB_UNZIPPED}/webrtc app/src/main/jni/megachat/
 
-              mkdir -p app/src
+              # mkdir -p app/src
               cp -fr ${BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_UNZIPPED} app/src
-
 
               """
             }
           }
+    stage('Compile') {
+      steps {
+        sh """
+        cd /Users/robinshi/work/android_release/app/src/main/jni
+        /usr/local/bin/bash build.sh all
+        """
+        // sh './gradlew compileDebugSources'
+      }
+    }
     stage('Compile') {
       steps {
         // Compile the app and its dependencies
