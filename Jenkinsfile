@@ -72,8 +72,10 @@ pipeline {
     stage('build sdk') {
       steps {
         sh """
+        echo $PATH
         cd /Users/robinshi/work/android_release/app/src/main/jni
         /usr/local/bin/bash build.sh all
+
         """
         // sh './gradlew compileDebugSources'
       }
