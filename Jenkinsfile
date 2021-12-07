@@ -73,6 +73,7 @@ pipeline {
       steps {
         sh """
         echo $PATH
+        export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/openjdk@11/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/robinshi/Library/Android/sdk/platform-tools
         cd /Users/robinshi/work/android_release/app/src/main/jni
         /usr/local/bin/bash build.sh all
 
