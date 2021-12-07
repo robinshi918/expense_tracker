@@ -69,7 +69,7 @@ pipeline {
               """
             }
           }
-    stage('Compile') {
+    stage('build sdk') {
       steps {
         sh """
         cd /Users/robinshi/work/android_release/app/src/main/jni
