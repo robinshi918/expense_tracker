@@ -8,13 +8,13 @@ pipeline {
     ANDROID_SDK_ROOT = '/Users/robinshi/Library/Android/sdk'
 
     BUILD_LIB_DOWNLOAD_FOLDER = '${WORKSPACE}/mega_build_download'
-    WEBRTC_LIB_URL = "https://mega.nz/file/t81HSYJI#KQNzSEqmGVSXfwmQx2HMJy3Jo2AcDfYm4oiMP_CFW6s"
-    WEBRTC_LIB_FILE = 'WebRTC_NDKr16b_m76_p21.zip'
+    WEBRTC_LIB_URL = "https://mega.nz/file/RsMEgZqA#s0P754Ua7AqvWwamCeyrvNcyhmPjHTQQIxtqziSU4HI"
+    WEBRTC_LIB_FILE = 'WebRTC_NDKr21_p21_branch-heads4405_v2.zip'
     WEBRTC_LIB_UNZIPPED = 'webrtc_unzipped'
     GOOGLE_MAP_API_URL = "https://mega.nz/#!1tcl3CrL!i23zkmx7ibnYy34HQdsOOFAPOqQuTo1-2iZ5qFlU7-k"
     GOOGLE_MAP_API_FILE = 'default_google_maps_api.zip'
     GOOGLE_MAP_API_UNZIPPED = 'default_google_map_api_unzipped'
-
+    PATH = "/my/test/:/Applications/MEGAcmd.app/Contents/MacOS:${PATH}"
   }
   options {
     // Stop the build early in case of compile or test failures
@@ -23,57 +23,58 @@ pipeline {
   stages {
 
     stage('Download Dependency Lib for SDK') {
-            steps {
-              sh """
-              export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
-              mkdir -p "${BUILD_LIB_DOWNLOAD_FOLDER}"
-              cd "${BUILD_LIB_DOWNLOAD_FOLDER}"
-              pwd
-              ls -lh
+      steps {
+        sh "echo PATH = $PATH"
+        sh """
+        export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH
+        mkdir -p "${BUILD_LIB_DOWNLOAD_FOLDER}"
+        cd "${BUILD_LIB_DOWNLOAD_FOLDER}"
+        pwd
+        ls -lh
 
-              if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${WEBRTC_LIB_FILE}"; then
-                echo "${WEBRTC_LIB_FILE} already downloaded. Skip downloading."
-              else
-                echo "downloading webrtc"
-                mega-get ${WEBRTC_LIB_URL}
-              fi
-              if [ -d "${WEBRTC_LIB_UNZIPPED}" ]; then
-                echo "webrtc already unzipped"
-              else
-                unzip ${WEBRTC_LIB_FILE} -d ${WEBRTC_LIB_UNZIPPED}
-              fi
+        if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${WEBRTC_LIB_FILE}"; then
+        echo "${WEBRTC_LIB_FILE} already downloaded. Skip downloading."
+        else
+        echo "downloading webrtc"
+        mega-get ${WEBRTC_LIB_URL}
 
-              if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_FILE}"; then
-                echo "${GOOGLE_MAP_API_FILE} already downloaded. Skip downloading."
-              else
-                echo "downloading google map api"
-                mega-get ${GOOGLE_MAP_API_URL}
-              fi
-              if [ -d "${GOOGLE_MAP_API_UNZIPPED}" ]; then
-                echo "default_google_map_api already unzipped"
-              else
-                unzip ${GOOGLE_MAP_API_FILE} -d ${GOOGLE_MAP_API_UNZIPPED}
-              fi
+        echo "unzipping webrtc"
+        rm -fr ${WEBRTC_LIB_UNZIPPED}
+        unzip ${WEBRTC_LIB_FILE} -d ${WEBRTC_LIB_UNZIPPED}
+        fi
 
-              ls -lh
+        if test -f "${BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_FILE}"; then
+        echo "${GOOGLE_MAP_API_FILE} already downloaded. Skip downloading."
+        else
+        echo "downloading google map api"
+        mega-get ${GOOGLE_MAP_API_URL}
 
-              cd ${WORKSPACE}
-              pwd
-              # apply dependency patch
-              # mkdir -p app/src/main/jni/megachat
-              cp -fr ${BUILD_LIB_DOWNLOAD_FOLDER}/${WEBRTC_LIB_UNZIPPED}/webrtc app/src/main/jni/megachat/
+        echo "unzipping google map api"
+        rm -fr ${GOOGLE_MAP_API_UNZIPPED}
+        unzip ${GOOGLE_MAP_API_FILE} -d ${GOOGLE_MAP_API_UNZIPPED}
+        fi
 
-              # mkdir -p app/src
-              cp -fr ${BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_UNZIPPED} app/src
+        ls -lh
 
-              """
-            }
-          }
+        cd ${WORKSPACE}
+        pwd
+        # apply dependency patch
+        # mkdir -p app/src/main/jni/megachat
+        cp -fr ${BUILD_LIB_DOWNLOAD_FOLDER}/${WEBRTC_LIB_UNZIPPED}/webrtc app/src/main/jni/megachat/
+
+        # mkdir -p app/src
+        cp -fr ${BUILD_LIB_DOWNLOAD_FOLDER}/${GOOGLE_MAP_API_UNZIPPED} app/src
+
+        """
+      }
+    }
     stage('build sdk') {
       steps {
         sh """
         echo $PATH
-        export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/openjdk@11/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/robinshi/Library/Android/sdk/platform-tools
+        exit 0
+        export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/openjdk@11/bin:/usr/local/bin:$PATH
+        # export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/openjdk@11/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/robinshi/Library/Android/sdk/platform-tools
         cd /Users/robinshi/work/android_release/app/src/main/jni
         /usr/local/bin/bash build.sh all
 
