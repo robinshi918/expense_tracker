@@ -23,7 +23,7 @@ pipeline {
   stages {
     stage("Test Shell") {
       steps {
-        sh("test.sh")
+        sh("${WORKSPACE}/test.sh")
         sh("exit 1")
       }
     }
