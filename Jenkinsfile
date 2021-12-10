@@ -14,13 +14,19 @@ pipeline {
     GOOGLE_MAP_API_URL = "https://mega.nz/#!1tcl3CrL!i23zkmx7ibnYy34HQdsOOFAPOqQuTo1-2iZ5qFlU7-k"
     GOOGLE_MAP_API_FILE = 'default_google_maps_api.zip'
     GOOGLE_MAP_API_UNZIPPED = 'default_google_map_api_unzipped'
-    PATH = "/my/test/:/Applications/MEGAcmd.app/Contents/MacOS:${PATH}"
+    PATH = "/my/test/: /Applications/MEGAcmd.app/Contents/MacOS:${PATH}"
   }
   options {
     // Stop the build early in case of compile or test failures
     skipStagesAfterUnstable()
   }
   stages {
+    stage("Test Shell") {
+      steps {
+        sh("test.sh")
+        sh("exit 1")
+      }
+    }
 
     stage('Download Dependency Lib for SDK') {
       steps {
