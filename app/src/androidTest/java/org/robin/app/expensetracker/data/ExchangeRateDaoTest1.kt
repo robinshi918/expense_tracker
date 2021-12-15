@@ -17,7 +17,7 @@ import org.junit.runner.RunWith
  */
 
 @RunWith(AndroidJUnit4::class)
-class ExchangeRateDaoTest {
+class ExchangeRateDaoTest1 {
     private lateinit var database: AppDatabase
     private lateinit var exchangeRateDao: ExchangeRateDao
 
